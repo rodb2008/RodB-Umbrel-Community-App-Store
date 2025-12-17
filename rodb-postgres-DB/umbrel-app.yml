@@ -1,7 +1,7 @@
 manifestVersion: 1
-id: rodb-postgres-DB
+id: rodb-postgres-db
 name: Postgresql DB
-tagline: RodB postgres-DB
+tagline: RodB postgres-db
 icon: https://share.google/lC7apdT5JI7GaBGis
 category: Development
 version: "17.7"
