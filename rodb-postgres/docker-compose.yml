@@ -1,0 +1,23 @@
+version: "3.7"
+
+services:
+
+  app_proxy:
+    environment:
+      # The format here is: <app-id>_<docker-service-name>_1
+      APP_HOST: rodb-postgres_1
+      APP_PORT: 5432
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: P@ssw0rd
+      POSTGRES_DB: master
+    
+  server:
+    image: postgres:17
+    user: "5432:5432"
+    init: true
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+    volumes:
+      - /home/umbrel/umbrel/app-data/postgres/data:/var/lib/postgresql/data

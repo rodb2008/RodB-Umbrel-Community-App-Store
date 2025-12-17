@@ -1,0 +1,28 @@
+manifestVersion: 1
+id: rodb-postgres
+name: Postgresql Database
+tagline: RodB Postgresql Database
+icon: https://www.postgresql.org/
+category: Database
+version: "17.7"
+port: 5432
+description: >-
+  Add your app's description here.
+
+
+  You can also add newlines!
+
+developer: PostgreSQL
+website: https://www.postgresql.org/
+submitter: RodB
+submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
+repo: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
+support: https://www.postgresql.org/support/
+gallery:
+  - https://www.postgresql.org/media/img/misc/banner.jpg
+releaseNotes: >-
+  https://www.postgresql.org/about/news/postgresql-181-177-1611-1515-1420-and-1323-released-3171/
+dependencies: []
+path: "/home/umbrel/umbrel/app-data/postgres"
+defaultUsername: "admin"
+defaultPassword: "P@ssw0rd"
