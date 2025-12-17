@@ -1,7 +1,7 @@
 manifestVersion: 1
-id: sparkle-hello-world
+id: rodb-hello-world
 name: Hello World
-tagline: Replace this tagline with your app's tagline
+tagline: RodB Hello World
 icon: https://svgur.com/i/mvA.svg
 category: Development
 version: "1.0.0"
