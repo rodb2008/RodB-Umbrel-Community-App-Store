@@ -7,8 +7,10 @@ category: Database
 version: "17.7"
 port: 5432
 description: >-
-  Add your app's description here.
-
+  PostgreSQL Database
+  
+  defaultUsername: "admin"         
+  defaultPassword: "P@ssw0rd"
 
   You can also add newlines!
 
@@ -16,8 +18,8 @@ developer: PostgreSQL
 website: https://www.postgresql.org/
 submitter: RodB
 submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
-repo: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
-support: https://www.postgresql.org/support/
+repo: postgres:17
+support: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store/issues
 gallery:
   - https://www.postgresql.org/media/img/misc/banner.jpg
 releaseNotes: >-
