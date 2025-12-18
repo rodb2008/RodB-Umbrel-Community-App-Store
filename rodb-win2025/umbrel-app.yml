@@ -1,7 +1,7 @@
 manifestVersion: 1
 id: rodb-win2025
 name: win2025
-tagline: RodB Windows Server 20205
+tagline: RodB Windows Server 2025
 icon:  https://www.clipartmax.com/png/middle/240-2405555_windows-server-logo-png.png
 category: OS
 version: "2025"
@@ -10,7 +10,9 @@ description: >-
   Maintainer: https://github.com/dockur/windows
 
     A Docker Container containing Windows 2025 Server
+    
     How do I use it?
+    
     Very simple! These are the steps:
 
     Start the container and connect to port 8006 using your web browser.
