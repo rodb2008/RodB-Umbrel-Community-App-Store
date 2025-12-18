@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  server:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+    environment:
+      APP_HOST: rodb-postgres_1
+      APP_PORT: 80
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: P@ssw0rd
+      API_PORT: 81

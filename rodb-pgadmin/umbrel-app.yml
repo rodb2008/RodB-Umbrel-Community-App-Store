@@ -1,0 +1,27 @@
+manifestVersion: 1
+id: rodb-pgadmin
+name: pgAdmin
+tagline: RodB pgAdmin SQL Viewer
+icon:  https://www.pgadmin.org/static/COMPILED/assets/img/postgres-alt.svg
+category: Database
+version: "17.7"
+port: 80
+description: >-
+  Maintainer: pgAdmin Development Team
+
+    A Docker Container containing pgAdmin running in server mode over HTTP or HTTPS is available at Docker Hub. 
+
+developer: pgAdmin
+website: https://www.pgadmin.org/
+submitter: RodB
+submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
+repo: postgres:17
+support: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store/issues
+gallery:
+  - https://www.pgadmin.org/static/COMPILED/assets/img/screenshot.webp
+releaseNotes: >-
+  https://www.pgadmin.org/docs/pgadmin4/9.11/index.html
+dependencies: []
+path: ""
+defaultUsername: "admin@admin.com"
+defaultPassword: "P@ssw0rd"
