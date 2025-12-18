@@ -14,7 +14,7 @@ description: >-
     Reset default password with following CLI command:
     
     set +H
-    docker exec -it rodb-pgadmin python3 /pgadmin4/setup.py --reset-password --user admin@admin.com --password 'NewPassword!'
+    sudo docker exec -it rodb-pgadmin /venv/bin/python3 /pgadmin4/setup.py update-user admin@admin.com --password 'YourNewPassword' --admin
     set -H
 
 developer: pgAdmin
