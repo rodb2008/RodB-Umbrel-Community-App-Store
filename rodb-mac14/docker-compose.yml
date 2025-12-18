@@ -1,5 +1,5 @@
 services:
-  windows:
+  macos:
     image: dockurr/macos
     container_name: rodb-mac14
     environment:
