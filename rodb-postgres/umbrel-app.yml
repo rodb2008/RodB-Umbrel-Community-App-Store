@@ -2,7 +2,7 @@ manifestVersion: 1
 id: rodb-postgres
 name: Postgresql Database
 tagline: RodB Postgresql Database
-icon: /home/umbrel/umbrel/home/Downloads/elephant.png
+icon:  https://www.postgresql.org/media/img/about/press/elephant.png
 category: Database
 version: "17.7"
 port: 5432
