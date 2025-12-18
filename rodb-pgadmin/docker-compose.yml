@@ -1,7 +1,7 @@
 services:
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin
+    container_name: rodb-pgadmin
     restart: unless-stopped
     logging:
       driver: json-file

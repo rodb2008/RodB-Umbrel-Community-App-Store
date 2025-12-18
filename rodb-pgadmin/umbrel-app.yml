@@ -10,6 +10,12 @@ description: >-
   Maintainer: pgAdmin Development Team
 
     A Docker Container containing pgAdmin running in server mode over HTTP or HTTPS is available at Docker Hub. 
+    
+    Reset default password with following CLI command:
+    
+    set +H
+    docker exec -it rodb-pgadmin python3 /pgadmin4/setup.py --reset-password --user admin@admin.com --password 'NewPassword!'
+    set -H
 
 developer: pgAdmin
 website: https://www.pgadmin.org/

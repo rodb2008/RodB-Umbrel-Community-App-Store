@@ -11,8 +11,12 @@ description: >-
   
   defaultUsername: "admin"         
   defaultPassword: "P@ssw0rd"
-
-  You can also add newlines!
+  
+  You can change the postgres password from CLI with:
+  
+    set +H
+    sudo docker exec -it rodb-postgres psql -U admin -d master -c "ALTER USER admin WITH PASSWORD 'your_new_password';"
+    set -H
 
 developer: PostgreSQL
 website: https://www.postgresql.org/
