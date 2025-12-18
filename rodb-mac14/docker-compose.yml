@@ -1,13 +1,12 @@
 services:
   windows:
-    image: dockurr/windows
-    container_name: rodb-winsvr2025
+    image: dockurr/macos
+    container_name: rodb-mac14
     environment:
-      VERSION: "2025"
-      HOSTNAME: "Dockur-WinSvr25"
+      VERSION: "14"
       RAM_SIZE: "12G"
       CPU_CORES: "16"
-      DISK_SIZE: "500G"
+      DISK_SIZE: "200G"
       
     devices:
       - /dev/kvm
@@ -19,6 +18,6 @@ services:
       - 3389:3389/tcp
       - 3389:3389/udp
     volumes:
-      - /home/umbrel/umbrel/app-data/rodb-win2025/data:/storage
+      - /home/umbrel/umbrel/app-data/rodb-mac14/data:/storage
     restart: unless_stopped
     stop_grace_period: 2m
