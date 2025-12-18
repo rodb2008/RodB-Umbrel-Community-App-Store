@@ -4,8 +4,8 @@ name: pgAdmin
 tagline: RodB pgAdmin SQL Viewer
 icon:  https://www.pgadmin.org/static/COMPILED/assets/img/postgres-alt.svg
 category: Database
-version: "17.7"
-port: 80
+version: "9.11"
+port: 81
 description: >-
   Maintainer: pgAdmin Development Team
 
