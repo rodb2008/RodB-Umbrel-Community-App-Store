@@ -5,7 +5,7 @@ services:
     environment:
       VERSION: "2025"
       HOSTNAME: "Dockur-WinSvr25"
-      RAM_SIZE: "14G"
+      RAM_SIZE: "16G"
       CPU_CORES: "16"
       DISK_SIZE: "500G"
       
