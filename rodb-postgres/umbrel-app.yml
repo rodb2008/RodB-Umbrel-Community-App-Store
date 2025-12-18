@@ -1,6 +1,6 @@
 manifestVersion: 1
 id: rodb-postgres
-name: Postgresql Database
+name: Postgresql DB
 tagline: RodB Postgresql Database
 icon:  https://www.postgresql.org/media/img/about/press/elephant.png
 category: Database
@@ -26,6 +26,6 @@ gallery:
 releaseNotes: >-
   https://www.postgresql.org/docs/17/release-17-7.html
 dependencies: []
-path: "/home/umbrel/umbrel/app-data/postgres"
+path: ""
 defaultUsername: "admin"
 defaultPassword: "P@ssw0rd"
