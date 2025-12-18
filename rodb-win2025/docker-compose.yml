@@ -4,7 +4,7 @@ services:
     container_name: rodb-winsvr2025
     environment:
       VERSION: "2025"
-      HOST_HOSTNAME: "Dockur-WinSvr25"
+      HOSTNAME: "Dockur-WinSvr25"
       RAM_SIZE: "8G"
       CPU_CORES: "16"
       DISK_SIZE: "500G"
