@@ -1,0 +1,58 @@
+manifestVersion: 1
+id: rodb-win2025
+name: win2025
+tagline: RodB Windows Server 20205
+icon:  https://www.clipartmax.com/png/middle/240-2405555_windows-server-logo-png.png
+category: OS
+version: "2025"
+port: 81
+description: >-
+  Maintainer: https://github.com/dockur/windows
+
+    A Docker Container containing Windows 2025 Server
+    How do I use it?
+    Very simple! These are the steps:
+
+    Start the container and connect to port 8006 using your web browser.
+
+    Sit back and relax while the magic happens, the whole installation will be performed fully automatic.
+
+    Once you see the desktop, your Windows installation is ready for use.
+
+    Enjoy your brand new machine, and don't forget to star this repo!
+    
+    Select version
+    
+        Value	Version	Size
+    11	Windows 11 Pro	7.2 GB
+    11l	Windows 11 LTSC	4.7 GB
+    11e	Windows 11 Enterprise	6.6 GB
+    10	Windows 10 Pro	5.7 GB
+    10l	Windows 10 LTSC	4.6 GB
+    10e	Windows 10 Enterprise	5.2 GB
+    8e	Windows 8.1 Enterprise	3.7 GB
+    7u	Windows 7 Ultimate	3.1 GB
+    vu	Windows Vista Ultimate	3.0 GB
+    xp	Windows XP Professional	0.6 GB
+    2k	Windows 2000 Professional	0.4 GB
+    2025	Windows Server 2025	6.7 GB
+    2022	Windows Server 2022	6.0 GB
+    2019	Windows Server 2019	5.3 GB
+    2016	Windows Server 2016	6.5 GB
+    2012	Windows Server 2012	4.3 GB
+    2008	Windows Server 2008	3.0 GB
+    2003	Windows Server 2003	0.6 GB
+    
+
+developer: Microsoft
+website: https://github.com/dockur/windows
+submitter: RodB
+submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
+repo: dockurr/windows
+support: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store/issues
+gallery:
+  - https://repository-images.githubusercontent.com/743140652/69c0c16a-9695-484e-861e-9b07c0507f45
+releaseNotes: >-
+  https://www.pgadmin.org/docs/pgadmin4/9.11/index.html
+dependencies: []
+path: ""
