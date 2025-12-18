@@ -9,8 +9,6 @@ services:
       driver: "json-file"
       options:
         max-size: "10m"
-    user:
-      - "5432:5432"
     environment:
       APP_HOST: rodb-postgres_1
       APP_PORT: 5432
