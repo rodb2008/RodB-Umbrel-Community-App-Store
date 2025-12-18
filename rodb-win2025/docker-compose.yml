@@ -10,10 +10,10 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
-      - 8006:8006
+      - '8006:8006'
       - 3389:3389/tcp
       - 3389:3389/udp
     volumes:
-      - ./windows:/storage
+      - /home/umbrel/umbrel/app-data/rodb-win2025/windows:/storage
     restart: always
     stop_grace_period: 2m
