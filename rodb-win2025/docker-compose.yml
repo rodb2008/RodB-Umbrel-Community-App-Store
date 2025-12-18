@@ -1,9 +1,14 @@
 services:
   windows:
     image: dockurr/windows
-    container_name: rodb-win2025
+    container_name: rodb-winsvr2025
     environment:
       VERSION: "2025"
+      HOST_HOSTNAME: "Dockur-WinSvr25"
+      RAM_SIZE: "8G"
+      CPU_CORES: "16"
+      DISK_SIZE: "500G"
+      
     devices:
       - /dev/kvm
       - /dev/net/tun
@@ -14,6 +19,6 @@ services:
       - 3389:3389/tcp
       - 3389:3389/udp
     volumes:
-      - /home/umbrel/umbrel/app-data/rodb-win2025/windows:/storage
+      - /home/umbrel/umbrel/app-data/rodb-win2025/data:/storage
     restart: always
     stop_grace_period: 2m
