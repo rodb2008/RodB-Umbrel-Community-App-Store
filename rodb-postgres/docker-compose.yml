@@ -1,14 +1,15 @@
-version: "3.7"
-
+version: '3.7'
 services:
-  server:
+  postgres:
     image: postgres:17
-    container_name: postgres
+    container_name: rodb-postgres
     restart: unless-stopped
     logging:
-      driver: "json-file"
+      driver: json-file
       options:
-        max-size: "10m"
+        max-size: 10m
+    ports:
+      - '5432:5432'
     environment:
       APP_HOST: rodb-postgres_1
       APP_PORT: 5432
@@ -16,4 +17,4 @@ services:
       POSTGRES_PASSWORD: P@ssw0rd
       POSTGRES_DB: master
     volumes:
-      - /home/umbrel/umbrel/app-data/postgres/data:/var/lib/postgresql/data
+      - /home/umbrel/umbrel/app-data/rodb-postgres/data:/var/lib/postgresql/data

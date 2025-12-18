@@ -1,16 +1,15 @@
-version: "3.7"
-
+version: '3.7'
 services:
-  server:
+  pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
     restart: unless-stopped
     logging:
-      driver: "json-file"
+      driver: json-file
       options:
-        max-size: "10m"
+        max-size: 10m
      ports:
-       - "81:80"
+       - '81:80'
     environment:
       APP_HOST: rodb-pgadmin_1
       APP_PORT: 80
