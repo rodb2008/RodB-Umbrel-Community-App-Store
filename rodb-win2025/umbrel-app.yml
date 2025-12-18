@@ -5,7 +5,7 @@ tagline: RodB Windows Server 20205
 icon:  https://www.clipartmax.com/png/middle/240-2405555_windows-server-logo-png.png
 category: OS
 version: "2025"
-port: 81
+port: 8006
 description: >-
   Maintainer: https://github.com/dockur/windows
 
