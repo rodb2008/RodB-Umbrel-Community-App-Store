@@ -1,0 +1,10 @@
+services:
+  firefox:
+    image: jlesage/firefox
+    container_name: rodb-firefox
+    ports:
+      - '5800:5800'
+    volumes:
+      - "/home/umbrel/umbrel/app-data/rodb-firefox:/config:rw"
+    restart: unless-stopped
+    stop_grace_period: 2m
