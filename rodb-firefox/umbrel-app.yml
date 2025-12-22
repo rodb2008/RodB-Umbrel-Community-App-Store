@@ -2,10 +2,10 @@ manifestVersion: 1
 id: rodb-firefox
 name: firefox
 tagline: RodB Firefox Container
-icon:  https://en.wikipedia.org/wiki/File:Firefox_logo,_2019.svg
+icon:  https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg
 category: Browser
 version: "25.12.5"
-port: 8006
+port: 5800
 description: >-
   Maintainer: https://hub.docker.com/r/jlesage/firefox
 
@@ -15,15 +15,14 @@ description: >-
     requiring no installation or configuration on the client side, or via any VNC client.
     
 
-developer: Microsoft
+developer: jlesage/docker-firefox
 website: https://github.com/jlesage/docker-firefox
 submitter: RodB
 submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
 repo: dockurr/windows
 support: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store/issues
 gallery:
-  - https://repository-images.githubusercontent.com/743140652/69c0c16a-9695-484e-861e-9b07c0507f45
-  - https://camo.githubusercontent.com/726bc70a41ea21d9cad6fe5912341ec6e84de148c4deacedc8b70476a59e27f8/68747470733a2f2f696d672e796f75747562652e636f6d2f76692f786847596f6275473530382f302e6a7067
+  - https://upload.wikimedia.org/wikipedia/commons/a/a0/Firefox_logo%2C_2019.svg
 releaseNotes: >-
    https://github.com/jlesage/docker-firefox
 dependencies: []
