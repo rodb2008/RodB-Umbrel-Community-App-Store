@@ -2,7 +2,7 @@ manifestVersion: 1
 id: rodb-hello-world
 name: Hello World
 tagline: RodB Hello World
-icon: https://svgur.com/i/mvA.svg
+icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-hello-world/images.png
 category: Development
 version: "1.0.0"
 port: 4000
