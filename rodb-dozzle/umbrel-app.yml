@@ -1,6 +1,6 @@
 manifestVersion: 1
-id: dozzle
-name: Dozzle
+id: rodb-dozzle
+name: rodb-Dozzle
 tagline: Dozzle is a real-time log viewer for docker containers
 icon: -  https://github.com/rodb2008/RodB-Umbrel-Community-App-Store/blob/master/dozzle/logo.png?raw=true
 category: Development
