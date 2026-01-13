@@ -2,8 +2,8 @@ manifestVersion: 1
 id: dozzle
 name: Dozzle
 tagline: Dozzle is a real-time log viewer for docker containers
-icon: logo.png
-category: Debug
+icon: -  https://github.com/rodb2008/RodB-Umbrel-Community-App-Store/blob/master/dozzle/logo.png?raw=true
+category: Development
 port: 10001
 version: "v9.0.1"
 description: >-
@@ -29,9 +29,9 @@ dependencies: []
 repo: https://github.com/amir20/dozzle
 support: https://github.com/amir20/dozzle/issues
 gallery:
-  - 1.jpg
-  - 2.jpg
-  - 3.jpg
+  -  https://github.com/rodb2008/RodB-Umbrel-Community-App-Store/blob/master/dozzle/1.jpg?raw=true
+  -  https://github.com/rodb2008/RodB-Umbrel-Community-App-Store/blob/master/dozzle/2.jpg?raw=true
+  -  https://github.com/rodb2008/RodB-Umbrel-Community-App-Store/blob/master/dozzle/3.jpg?raw=true
 path: ""
 defaultUsername: ""
 defaultPassword: ""
