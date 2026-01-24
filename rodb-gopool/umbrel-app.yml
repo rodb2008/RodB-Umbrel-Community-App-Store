@@ -25,9 +25,9 @@ dependencies: []
 repo: https://github.com/rodb2008/RodB-Umbrel-Community-App-Stor
 support: https://github.com/rodb2008/RodB-Umbrel-Community-App-Stor
 gallery:
-  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/1.jpg
-  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/2.jpg
-  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/3.jpg
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/1.png
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/2.png
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/3.png
 path: ""
 defaultUsername: ""
 defaultPassword: ""
