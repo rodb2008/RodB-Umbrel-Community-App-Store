@@ -1,28 +1,38 @@
-version: "3.8"
-
 services:
+  # Added required proxy for Umbrel dashboard and Tor access
+  app_proxy:
+    image: getumbrel/app-proxy:v0.1.2
+    restart: unless-stopped
+    environment:
+      APP_HOST: gopool-container
+      APP_PORT: 23443 # Port your app's web UI is listening on
+    networks:
+      - umbrel_main_network
+
   gopool:
     image: rodb2008com/gopool:latest
     container_name: gopool-container
-    # Restarts the app automatically if it crashes or the host reboots
     restart: unless-stopped
-    # Map host port to container port (adjust 8080 if your app uses a different port)
+    # Use Umbrel's internal network to communicate with other apps/proxy
+    networks:
+      - umbrel_main_network
     ports:
-      - "8080:23443"
       - "23080:23080"
       - "23443:23443"
       - "23456:23456"
       - "24333:24333"
       - "24443:24443"
-    # Mount local directories into the container
     volumes:
-      - ./data:/app/data
-      - ./scripts:/app/scripts
-      - ./logo.png:/app/logo.png:ro  # ':ro' makes it read-only for safety
-      # Map the Bitcoin cookie from your Umbrel host to the path the app expects
+      # Use absolute variable for app-specific data
+      - ${APP_DATA_DIR}/data:/app/data
+      - ${APP_DATA_DIR}/scripts:/app/scripts
+      - ${APP_DATA_DIR}/logo.png:/app/logo.png:ro
+      # Correct host path for Bitcoin cookie on Umbrel
       - /home/umbrel/umbrel/app-data/bitcoin/data/bitcoin/.cookie:/home/umbrel/.cookie:ro
-      # Map the Bitcoin cookie from your Umbrel host to the path the app expects
-      # - /home/umbrel/.cookie:/home/umbrel/.cookie:ro
-      # Environment variables (if your Go app uses them)
     environment:
       - APP_ENV=production
+
+networks:
+  umbrel_main_network:
+    external: true
+    name: umbrel_main_network
