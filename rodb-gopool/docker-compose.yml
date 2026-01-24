@@ -1,7 +1,7 @@
 services:
   # Added required proxy for Umbrel dashboard and Tor access
   app_proxy:
-    image: getumbrel/app-proxy:v0.1.2
+    image: getumbrel/app-proxy:v1.0.0
     restart: unless-stopped
     environment:
       APP_HOST: gopool-container
