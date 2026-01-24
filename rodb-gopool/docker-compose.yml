@@ -3,23 +3,27 @@ services:
   app_proxy:
     image: getumbrel/app-proxy:1.0.0
     restart: unless-stopped
+    ports:
+      - '23080:23080'
     environment:
-      APP_HOST: gopool-container
-      APP_PORT: 23080 # Port your app's web UI is listening on
+      APP_HOST: rodb-gopool-container
+      APP_PORT: 23443 # Port your app's web UI is listening on
     networks:
       - umbrel_main_network
+    container_name: rodb-gopool_app_proxy_1
 
   gopool:
     image: rodb2008com/gopool:latest
-    container_name: gopool-container
+    container_name: rodb-gopool-container
     restart: unless-stopped
     # Use Umbrel's internal network to communicate with other apps/proxy
     networks:
       - umbrel_main_network
     ports:
-      - "23456:23456"
-      - "24333:24333"
-      - "24443:24443"
+      - '8081:23443'
+      - '23456:23456'
+      - '24333:24333'
+      - '24443:24443'
     volumes:
       # Use absolute variable for app-specific data
       - ${APP_DATA_DIR}/data:/app/data
