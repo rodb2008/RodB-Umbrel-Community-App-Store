@@ -5,7 +5,7 @@ name: goPool
 tagline: Dozzle is a real-time log viewer for docker containers
 icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
 category: Bitcoin
-port: 24080
+port: 23443
 version: v0.4.1
 description: >-
   goPool
