@@ -1,0 +1,35 @@
+---
+manifestVersion: 1
+id: rodb-gopool
+name: goPool
+tagline: Dozzle is a real-time log viewer for docker containers
+icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-dozzle/logo.png
+category: Development
+port: 24080
+version: v0.4.1
+description: >-
+  goPool
+  
+  We're a solo mining pool running open-source software with split-coinbase payouts and transparent operations. This is true solo mining: if your miner finds a block, you get the block reward. We don't split rewards among miners--the miner who finds it gets paid.
+
+  Reality check - Solo mining is probabilistic. Small miners can go months or years without finding a block. We don't know when--or if--you'll find one.
+
+releaseNotes: |-
+  Initial Release
+
+    Released - 2026-01-23
+    
+developer: Distortions81
+website: https://m45core.com
+dependencies: []
+repo: https://github.com/rodb2008/RodB-Umbrel-Community-App-Stor
+support: https://github.com/rodb2008/RodB-Umbrel-Community-App-Stor
+gallery:
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-dozzle/1.jpg
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-dozzle/2.jpg
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-dozzle/3.jpg
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+submitter: RodB
+submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git

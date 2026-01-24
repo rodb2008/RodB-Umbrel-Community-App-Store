@@ -1,0 +1,346 @@
+{{/* Node accountability / identity page */}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+	<meta charset="UTF-8">
+	<title>{{if .BrandDomain}}{{.BrandDomain}}{{else}}{{.BrandName}}{{end}} Node Info</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	{{template "header" .}}
+	<div class="page">
+		<h1>Bitcoin Node Info</h1>
+
+		<div class="card">
+			<div class="grid">
+				<div>
+					<div class="label">Pool software</div>
+					<div class="value mono">{{.PoolSoftware}}</div>
+					<p class="text-sm">Build/implementation name of this solo pool.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="label">Chain identity checks</div>
+			<div class="grid">
+				<div>
+					<div class="label">Genesis hash (height 0)</div>
+					<div class="value mono" id="node-genesis-hash">--</div>
+				</div>
+				<div>
+					<div class="label">Expected Bitcoin genesis</div>
+					<div class="value mono" id="node-genesis-expected">--</div>
+				</div>
+				<div>
+					<div class="label">Matches known Bitcoin genesis</div>
+					<div class="value mono" id="node-genesis-match">--</div>
+				</div>
+				<div>
+					<div class="label">Best block hash</div>
+					<div class="value mono" id="node-best-hash">--</div>
+					<p class="text-sm">You can paste this into an external Bitcoin explorer for extra verification.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="grid">
+				<div>
+					<div class="label">Software</div>
+					<div class="value mono" id="node-subversion">--</div>
+					<p class="text-sm">Reported by <span class="mono">getnetworkinfo.subversion</span>.</p>
+				</div>
+				<div>
+					<div class="label">Network</div>
+					<div class="value mono" id="node-network">--</div>
+					<p class="text-sm">Derived from <span class="mono">getblockchaininfo.chain</span>.</p>
+				</div>
+				<div>
+					<div class="label">RPC endpoint</div>
+					<div class="value mono">{{.NodeRPCURL}}</div>
+					<p class="text-sm">Where this pool talks to the node.</p>
+				</div>
+				<div>
+					<div class="label">ZMQ endpoint</div>
+					<div class="value mono">
+						{{if .NodeZMQAddr}}{{.NodeZMQAddr}}{{else}}(not configured){{end}}
+					</div>
+					<p class="text-sm">If set, new blocks are received via ZMQ.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="label">Sync status</div>
+			<div class="grid">
+				<div>
+					<div class="label">Blocks / headers</div>
+					<div class="value mono" id="node-blocks">-- / --</div>
+				</div>
+				<div>
+					<div class="label">Initial block download</div>
+					<div class="value mono" id="node-ibd">--</div>
+				</div>
+				<div>
+					<div class="label">Peers (total / in / out)</div>
+					<div class="value mono" id="node-connections">-- / -- / --</div>
+				</div>
+				<div>
+					<div class="label">Chain size on disk</div>
+					<div class="value mono" id="node-size">--</div>
+				</div>
+				<div>
+					<div class="label">Pruned node</div>
+					<div class="value mono" id="node-pruned">--</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card" style="margin-top:16px;">
+			<div class="label">Node peers</div>
+			<div class="peer-controls">
+				<label for="node-peer-sort">Sort by</label>
+				<select id="node-peer-sort">
+					<option value="ping" selected>Ping (lowest first)</option>
+					<option value="age">Age (oldest first)</option>
+				</select>
+			</div>
+			<p class="peer-cleanup-info">
+				<b>Cleanup:</b>
+				{{if .NodePeerCleanupEnabled}}Enabled{{else}}Disabled{{end}}
+				{{if .NodePeerCleanupEnabled}}
+					· threshold {{printf "%.0f" .NodePeerCleanupMaxPingMs}} ms
+					· keep ≥ {{.NodePeerCleanupMinPeers}} peers
+				{{end}}
+			</p>
+			<div class="text-sm" id="node-peer-list">
+				Loading peer list…
+			</div>
+		</div>
+
+		<div style="margin-top:16px;padding:8px;text-align:center;font-size:0.85em;color:#888;">
+			<div class="mono" id="node-data-refreshed">Data loading...</div>
+		</div>
+
+	{{template "footer" .}}
+</div>
+<script>
+	(function () {
+		const REFRESH_INTERVAL = 10000;
+
+		const genesisHashEl = document.getElementById('node-genesis-hash');
+		const genesisExpectedEl = document.getElementById('node-genesis-expected');
+		const genesisMatchEl = document.getElementById('node-genesis-match');
+		const bestHashEl = document.getElementById('node-best-hash');
+		const subversionEl = document.getElementById('node-subversion');
+		const networkEl = document.getElementById('node-network');
+		const blocksEl = document.getElementById('node-blocks');
+		const ibdEl = document.getElementById('node-ibd');
+		const connectionsEl = document.getElementById('node-connections');
+		const sizeEl = document.getElementById('node-size');
+		const prunedEl = document.getElementById('node-pruned');
+		const peerListEl = document.getElementById('node-peer-list');
+		const peerSortEl = document.getElementById('node-peer-sort');
+
+		function formatBytes(bytes) {
+			if (bytes === undefined || bytes === null) {
+				return '--';
+			}
+			let val = Number(bytes);
+			if (isNaN(val) || val <= 0) {
+				return '0 B';
+			}
+			const units = ['B', 'KiB', 'MiB', 'GiB', 'TiB'];
+			let idx = 0;
+			while (val >= 1024 && idx < units.length - 1) {
+				val /= 1024;
+				idx++;
+			}
+			return `${val.toFixed(2)} ${units[idx]}`;
+		}
+
+		function displayNumber(value) {
+			if (value === undefined || value === null) {
+				return '--';
+			}
+			return value;
+		}
+
+		function displayBoolean(value) {
+			if (value === undefined || value === null) {
+				return '--';
+			}
+			return value ? 'true' : 'false';
+		}
+
+		let peerData = [];
+
+		function getSortedPeers() {
+			if (!Array.isArray(peerData) || peerData.length === 0) {
+				return [];
+			}
+			const peers = peerData.slice();
+			if (peerSortEl && peerSortEl.value === 'ping') {
+				peers.sort((a, b) => (a.ping_ms || 0) - (b.ping_ms || 0));
+			} else {
+				peers.sort((a, b) => (a.connected_at || 0) - (b.connected_at || 0));
+			}
+			return peers;
+		}
+
+		function updatePeerList() {
+			if (!peerListEl) {
+				return;
+			}
+			peerListEl.innerHTML = '';
+			const sorted = getSortedPeers();
+			if (sorted.length === 0) {
+				const empty = document.createElement('div');
+				empty.className = 'text-sm';
+				empty.textContent = 'No peers connected';
+				peerListEl.appendChild(empty);
+				return;
+			}
+			const grid = document.createElement('div');
+			grid.className = 'peer-grid';
+			sorted.forEach(peer => {
+				const item = document.createElement('div');
+				item.className = 'peer-entry';
+				const pingLabel = peer.ping_ms > 0 ? `${peer.ping_ms.toFixed(1)} ms` : '--';
+				const connectedLabel = formatDurationLabel(peer.connected_at);
+				item.innerHTML = `
+					<div class="peer-label">${peer.display}</div>
+					<div class="peer-meta">
+						<span>Ping ${pingLabel}</span>
+						<span>Time ${connectedLabel}</span>
+					</div>
+				`;
+				grid.appendChild(item);
+			});
+			peerListEl.appendChild(grid);
+		}
+
+		function formatDurationLabel(seconds) {
+			if (!seconds) {
+				return 'Unknown';
+			}
+			const nowSec = Math.floor(Date.now() / 1000);
+			let delta = Math.max(0, nowSec - seconds);
+			if (delta === 0) {
+				return '<1s';
+			}
+			const units = [
+				{ label: 'd', sec: 86400 },
+				{ label: 'h', sec: 3600 },
+				{ label: 'm', sec: 60 },
+				{ label: 's', sec: 1 },
+			];
+			const parts = [];
+			for (const unit of units) {
+				if (parts.length >= 2) {
+					break;
+				}
+				if (delta >= unit.sec) {
+					const count = Math.floor(delta / unit.sec);
+					if (count > 0) {
+						parts.push(`${count}${unit.label}`);
+						delta -= count * unit.sec;
+					}
+				}
+			}
+			return parts.length > 0 ? parts.join(' ') : '<1s';
+		}
+
+		function renderPeerList(peers) {
+			peerData = Array.isArray(peers) ? peers.slice() : [];
+			updatePeerList();
+		}
+
+		if (peerSortEl) {
+			peerSortEl.addEventListener('change', updatePeerList);
+		}
+
+		function updateNodeInfo(data) {
+			if (!data) {
+				return;
+			}
+			if (genesisHashEl) {
+				genesisHashEl.textContent = data.genesis_hash || '--';
+			}
+			if (genesisExpectedEl) {
+				genesisExpectedEl.textContent = data.genesis_expected || '--';
+			}
+			if (genesisMatchEl) {
+				genesisMatchEl.textContent = data.genesis_match === undefined ? '--' : (data.genesis_match ? 'true' : 'false');
+			}
+			if (bestHashEl) {
+				bestHashEl.textContent = data.best_block_hash || '--';
+			}
+			if (subversionEl) {
+				subversionEl.textContent = data.node_subversion || '--';
+			}
+			if (networkEl) {
+				networkEl.textContent = data.node_network || '--';
+			}
+			if (blocksEl) {
+				const blocks = displayNumber(data.node_blocks);
+				const headers = displayNumber(data.node_headers);
+				blocksEl.textContent = `${blocks} / ${headers}`;
+			}
+			if (ibdEl) {
+				ibdEl.textContent = displayBoolean(data.node_initial_block_download);
+			}
+			if (connectionsEl) {
+				const total = displayNumber(data.node_connections);
+				const inbound = displayNumber(data.node_connections_in);
+				const outbound = displayNumber(data.node_connections_out);
+				connectionsEl.textContent = `${total} / ${inbound} / ${outbound}`;
+			}
+			if (sizeEl) {
+				sizeEl.textContent = formatBytes(data.node_size_on_disk_bytes);
+			}
+			if (prunedEl) {
+				prunedEl.textContent = displayBoolean(data.node_pruned);
+			}
+		renderPeerList(data.node_peers);
+		}
+
+		function formatUTCTimestamp(isoString) {
+			if (!isoString) {
+				return 'Loading...';
+			}
+			try {
+				const date = new Date(isoString);
+				return 'Data refreshed at ' + date.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+			} catch (e) {
+				return 'Loading...';
+			}
+		}
+
+		function fetchNodeInfo() {
+			fetch('/api/node')
+				.then(response => {
+					if (!response.ok) {
+						throw new Error('Network response was not ok');
+					}
+					const updatedAt = response.headers.get('X-JSON-Updated-At');
+					const dataRefreshedEl = document.getElementById('node-data-refreshed');
+					if (dataRefreshedEl && updatedAt) {
+						dataRefreshedEl.textContent = formatUTCTimestamp(updatedAt);
+					}
+					return response.json();
+				})
+				.then(updateNodeInfo)
+				.catch(error => {
+					console.error('Error fetching node info:', error);
+				});
+		}
+
+		fetchNodeInfo();
+		setInterval(fetchNodeInfo, REFRESH_INTERVAL);
+	})();
+</script>
+</body>
+</html>

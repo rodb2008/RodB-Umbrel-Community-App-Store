@@ -1,0 +1,239 @@
+{{/* Pool configuration / limits summary (server-only) */}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+	<meta charset="UTF-8">
+	<title>{{if .BrandDomain}}{{.BrandDomain}}{{else}}{{.BrandName}}{{end}} Pool Info</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	{{template "header" .}}
+	<div class="page">
+		<h1>Pool Stats</h1>
+		<div class="card">
+			<div class="label">Identity</div>
+			<div class="grid">
+				<div>
+					<div class="label">Brand</div>
+					<div class="value">{{.BrandName}}</div>
+					<p class="text-sm">
+						Domain: {{if .BrandDomain}}<span class="mono">{{.BrandDomain}}</span>{{else}}(not set){{end}}
+					</p>
+				</div>
+				<div>
+					<div class="label">Pool wallet</div>
+					<div class="value mono">
+						{{if .DisplayPayoutAddress}}{{.DisplayPayoutAddress}}{{else}}(not configured){{end}}
+					</div>
+					<p class="text-sm">Pool operator's payout address for block rewards.</p>
+				</div>
+				{{if and (gt .OperatorDonationPercent 0.0) .DisplayOperatorDonationAddress}}
+				<div>
+					<div class="label">Operator fee donation{{if .OperatorDonationName}} to {{if .OperatorDonationURL}}<a href="{{.OperatorDonationURL}}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:underline;">{{.OperatorDonationName}}</a>{{else}}{{.OperatorDonationName}}{{end}}{{end}}</div>
+					<div class="value mono">{{.DisplayOperatorDonationAddress}}</div>
+					<p class="text-sm">
+						Pool operator donates {{printf "%.1f" .OperatorDonationPercent}}% of their pool fee to this address. Miner rewards are not affected.
+					</p>
+				</div>
+				{{end}}
+				<div>
+					<div class="label">Coinbase message</div>
+					<div class="value mono">
+						{{if .DisplayCoinbaseMessage}}{{.DisplayCoinbaseMessage}}{{else}}(default){{end}}
+					</div>
+					<p class="text-sm">Appears in the coinbase of blocks this pool finds.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="label">Connection limits</div>
+			<div class="grid">
+				<div>
+					<div class="label">Max connections</div>
+					<div class="value mono">
+						{{if gt .MaxConns 0}}{{.MaxConns}}{{else}}(unlimited){{end}}
+					</div>
+					<p class="text-sm">Upper bound on concurrent miner connections.</p>
+				</div>
+				<div>
+					<div class="label">Accept rate limit</div>
+					<div class="value mono">
+						{{if gt .MaxAcceptsPerSecond 0}}
+							{{.MaxAcceptsPerSecond}} conn/s, burst {{.MaxAcceptBurst}}
+						{{else}}
+							(no per-second limit)
+						{{end}}
+					</div>
+					<p class="text-sm">Token-bucket limiter for new TCP accepts.</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="label">Difficulty settings</div>
+			<div class="grid">
+				<div>
+					<div class="label">Minimum difficulty</div>
+					<div class="value mono">{{formatDiff .MinDifficulty}}</div>
+				</div>
+				<div>
+					<div class="label">Maximum difficulty</div>
+					<div class="value mono">{{formatDiff .MaxDifficulty}}</div>
+				</div>
+				<div>
+					<div class="label">Suggested difficulty lock</div>
+					<div class="value mono">
+						{{if .LockSuggestedDifficulty}}enabled{{else}}disabled{{end}}
+					</div>
+					<p class="text-sm">Whether miners can pin their own difficulty via <span class="mono">mining.suggest_difficulty</span>.</p>
+				</div>
+				<div>
+					<div class="label">Pool fee</div>
+					<div class="value mono">{{printf "%.3f" .PoolFeePercent}}%</div>
+					<p class="text-sm">
+						Fee charged on block rewards. Coinbase splits rewards between pool operator and worker.
+					</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="label">Pool metrics (since start)</div>
+			<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:8px;">
+				<div>
+					<div class="label">Block submissions</div>
+					<div class="mono" id="pool-block-submissions">--</div>
+				</div>
+				<div>
+					<div class="label">RPC getblocktemplate latency</div>
+					<div class="mono" id="pool-rpc-gbt">--</div>
+				</div>
+				<div>
+					<div class="label">RPC submitblock latency</div>
+					<div class="mono" id="pool-rpc-submit">--</div>
+				</div>
+				<div>
+					<div class="label">Error counters</div>
+					<div class="mono" id="pool-error-counters">--</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="card">
+			<div class="label">Recent errors</div>
+			<div class="mono" id="pool-error-history">--</div>
+		</div>
+
+		<div style="margin-top:16px;padding:8px;text-align:center;font-size:0.85em;color:#888;">
+			<div class="mono" id="pool-data-refreshed">Data loading...</div>
+		</div>
+
+	{{template "footer" .}}
+</div>
+<script>
+	(function () {
+		const REFRESH_INTERVAL = 10000;
+		const blockSubEl = document.getElementById('pool-block-submissions');
+		const rpcGBTEl = document.getElementById('pool-rpc-gbt');
+		const rpcSubmitEl = document.getElementById('pool-rpc-submit');
+		const errorCountersEl = document.getElementById('pool-error-counters');
+		const errorHistoryEl = document.getElementById('pool-error-history');
+		const dataRefreshedEl = document.getElementById('pool-data-refreshed');
+
+		function formatMilliseconds(value) {
+			if (value === undefined || value === null) {
+				return '0.000 ms';
+			}
+			const ms = Number(value) * 1000;
+			if (!Number.isFinite(ms)) {
+				return '0.000 ms';
+			}
+			return `${ms.toFixed(3)} ms`;
+		}
+
+		function formatUTCTimestamp(isoString) {
+			if (!isoString) return 'Loading...';
+			try {
+				const date = new Date(isoString);
+				return 'Data refreshed at ' + date.toISOString().replace('T', ' ').substring(0, 19) + ' UTC';
+			} catch (e) {
+				return 'Loading...';
+			}
+		}
+
+		function formatTimeAgo(value) {
+			if (!value) return 'unknown time';
+			const date = new Date(value);
+			if (!Number.isFinite(date.getTime())) return 'unknown time';
+			const diffSec = Math.floor((Date.now() - date.getTime()) / 1000);
+			if (diffSec < 0) return 'just now';
+			if (diffSec < 5) return 'just now';
+			if (diffSec < 60) return `${diffSec}s ago`;
+			if (diffSec < 3600) return `${Math.floor(diffSec / 60)}m ago`;
+			if (diffSec < 86400) return `${Math.floor(diffSec / 3600)}h ago`;
+			const days = Math.floor(diffSec / 86400);
+			if (days < 7) return `${days}d ago`;
+			if (days < 30) return `${Math.floor(days / 7)}w ago`;
+			if (days < 365) return `${Math.floor(days / 30)}mo ago`;
+			return `${Math.floor(days / 365)}y ago`;
+		}
+
+		function renderErrorHistory(errors) {
+			if (!errorHistoryEl) return;
+			if (!errors || errors.length === 0) {
+				errorHistoryEl.textContent = 'No recent errors';
+				return;
+			}
+			errorHistoryEl.replaceChildren();
+			const ordered = errors.slice().reverse();
+			ordered.forEach((entry) => {
+				const line = document.createElement('div');
+				const stamp = formatTimeAgo(entry.at);
+				const kind = entry.type || 'error';
+				const message = entry.message || 'unspecified';
+				line.textContent = `${stamp}  ${kind}: ${message}`;
+				errorHistoryEl.appendChild(line);
+			});
+		}
+
+		function updatePoolMetrics(data, updatedAt) {
+			if (!data) return;
+			if (blockSubEl) {
+				blockSubEl.textContent = `accepted: ${data.blocks_accepted || 0}   errors: ${data.blocks_errored || 0}`;
+			}
+			if (rpcGBTEl) {
+				rpcGBTEl.innerHTML = `1h min: ${formatMilliseconds(data.rpc_gbt_min_1h_sec)}<br>1h avg: ${formatMilliseconds(data.rpc_gbt_avg_1h_sec)}<br>1h max: ${formatMilliseconds(data.rpc_gbt_max_1h_sec)}<br>calls: ${data.rpc_gbt_count || 0}`;
+			}
+			if (rpcSubmitEl) {
+				rpcSubmitEl.innerHTML = `last: ${formatMilliseconds(data.rpc_submit_last_sec)}<br>max: ${formatMilliseconds(data.rpc_submit_max_sec)}<br>calls: ${data.rpc_submit_count || 0}`;
+			}
+			if (errorCountersEl) {
+				errorCountersEl.innerHTML = `RPC errors: ${data.rpc_errors || 0}<br>Share errors: ${data.share_errors || 0}`;
+			}
+			renderErrorHistory(data.error_history);
+			if (dataRefreshedEl && updatedAt) {
+				dataRefreshedEl.textContent = formatUTCTimestamp(updatedAt);
+			}
+		}
+
+		function fetchPoolMetrics() {
+			fetch('/api/pool-page')
+				.then(response => {
+					if (!response.ok) throw new Error('Network response was not ok');
+					const updatedAt = response.headers.get('X-JSON-Updated-At');
+					return response.json().then(data => ({ data, updatedAt }));
+				})
+				.then(({ data, updatedAt }) => updatePoolMetrics(data, updatedAt))
+				.catch(error => {
+					console.error('Error fetching pool metrics:', error);
+				});
+		}
+
+		fetchPoolMetrics();
+		setInterval(fetchPoolMetrics, REFRESH_INTERVAL);
+	})();
+</script>
+</body>
+</html>

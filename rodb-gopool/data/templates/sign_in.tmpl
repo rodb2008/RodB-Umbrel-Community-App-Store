@@ -1,0 +1,75 @@
+{{/* Clerk embedded sign-in page */}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>{{if .BrandDomain}}{{.BrandDomain}}{{else}}{{.BrandName}}{{end}} Sign In</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	{{template "header" .}}
+	<div class="page">
+		<div class="card">
+			<h2>Sign in</h2>
+			<p class="text-sm">Sign in to access your saved workers dashboard.</p>
+			<div id="clerk-sign-in" style="margin-top: 18px;"></div>
+			<noscript>
+				<p class="text-sm" style="color:#f88d8d;margin-top:12px;">
+					Sign-in requires JavaScript to be enabled.
+				</p>
+			</noscript>
+		</div>
+
+		{{template "footer" .}}
+	</div>
+
+	<script>
+	(function() {
+		const target = document.getElementById('clerk-sign-in');
+		if (!target) return;
+		const publishableKey = "{{.ClerkPublishableKey}}";
+		const afterSignInUrl = "{{.AfterSignInURL}}";
+		const afterSignUpUrl = "{{.AfterSignUpURL}}";
+
+		const fail = (msg) => {
+			target.innerHTML = '<p class="text-sm" style="color:#f88d8d;">' + msg + '</p>';
+		};
+
+		async function mountClerk() {
+			if (!window.Clerk) return fail('Clerk failed to load. Check ad blockers or network restrictions.');
+			try {
+				await window.Clerk.load();
+				window.Clerk.mountSignIn(target, {
+					afterSignInUrl,
+					afterSignUpUrl,
+				});
+			} catch (err) {
+				console.error('Clerk sign-in load failed', err);
+				fail('Clerk failed to initialize. Verify your Clerk domain configuration and publishable key.');
+			}
+		}
+
+		const timeout = window.setTimeout(() => {
+			fail('Sign-in timed out loading. Check ad blockers or try another network.');
+		}, 15000);
+
+		const script = document.createElement('script');
+		script.async = true;
+		script.crossOrigin = 'anonymous';
+		script.src = "{{.ClerkJSURL}}";
+		script.setAttribute('data-clerk-publishable-key', publishableKey);
+		script.onload = async () => {
+			window.clearTimeout(timeout);
+			await mountClerk();
+		};
+		script.onerror = () => {
+			window.clearTimeout(timeout);
+			fail('Failed to download Clerk. Check Content Security Policy, ad blockers, or network.');
+		};
+		document.head.appendChild(script);
+	})();
+	</script>
+</body>
+</html>

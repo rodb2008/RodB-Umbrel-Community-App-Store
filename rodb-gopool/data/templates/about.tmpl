@@ -1,0 +1,53 @@
+{{/* About page template */}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+	<meta charset="UTF-8">
+	<title>{{if .BrandDomain}}{{.BrandDomain}}{{else}}{{.BrandName}}{{end}} - About</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	{{template "header" .}}
+	<div class="page">
+		<h1>About This Pool</h1>
+
+		<div class="card">
+			<h2>Overview</h2>
+			<p>We're a solo mining pool running open-source software with split-coinbase payouts and transparent operations. This is true solo mining: if your miner finds a block, you get the block reward. We don't split rewards among miners--the miner who finds it gets paid.</p>
+			<p><strong>Reality check:</strong> Solo mining is probabilistic. Small miners can go months or years without finding a block. We don't know when--or if--you'll find one.</p>
+		</div>
+
+		<div class="card">
+			<h2>Payment System</h2>
+			<p>We use <strong>split-coinbase payouts</strong>, meaning you get paid directly from block rewards. Your Bitcoin address is written into the coinbase transaction itself--there's no pool wallet involved. Your address is verified before any work is accepted, and you can verify all coinbase outputs on your worker page.</p>
+		</div>
+
+		<div class="card">
+			<h2>Technical Stack</h2>
+			<p>Custom-built pool software written in Go, running a Bitcoin Core node with RPC and ZMQ for low-latency block template updates. Each miner connection runs independently on its own goroutine for responsive communication under load.</p>
+			{{if .GitHubURL}}
+			<p>Our code is open source on <a href="{{.GitHubURL}}" target="_blank" rel="noopener noreferrer">GitHub</a> under the AGPL license. We welcome code review, security audits, and contributions.</p>
+			{{else}}
+			<p>Our code is open source under the AGPL license. We welcome code review, security audits, and contributions.</p>
+			{{end}}
+		</div>
+
+		<div class="card">
+			<h2>Choosing a Pool</h2>
+			<p><strong>Be skeptical of every pool.</strong> Some pools have coinbase transactions that don't reward miners at all, meaning your work earns nothing. Always verify on-chain payouts.</p>
+			<p><strong>Split coinbase vs. pool wallets:</strong> Without split coinbase, you're trusting the operator to pay you from their wallet after receiving the block reward. With split coinbase, your address is in the coinbase transaction itself--cryptographically guaranteed.</p>
+			<p>Red flags to watch for:</p>
+			<ul>
+				<li><strong>No miner payouts</strong> -- Coinbase doesn't include miner addresses</li>
+				<li><strong>No split coinbase</strong> -- Requires trusting the operator to pay you later</li>
+				<li><strong>Insufficient infrastructure</strong> -- Unreliable hardware, poor connectivity, or shared hosting</li>
+				<li><strong>Claims that don't align with economics</strong> -- If it seems too good to be true, investigate</li>
+			</ul>
+			<p>Use tools like <a href="https://m45core.com:8443/" target="_blank" rel="noopener noreferrer">PoolCensus</a> to verify on-chain behavior. Our code is open source, our payouts are verifiable on-chain, and our fees reflect actual costs. Trust, but verify.</p>
+		</div>
+
+		{{template "footer" .}}
+	</div>
+</body>
+</html>

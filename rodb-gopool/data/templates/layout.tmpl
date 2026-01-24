@@ -1,0 +1,146 @@
+{{/* Shared layout pieces: header toolbar and footer */}}
+
+{{define "header"}}
+<header>
+	<div class="header-inner">
+		<div class="brand">
+			<img src="/logo.png" alt="{{.BrandName}} logo" class="brand-logo">
+			<div>
+				{{if .BrandDomain}}
+				<div class="brand-title">{{.BrandDomain}}</div>
+				{{end}}
+				{{if .ServerLocation}}
+				<div class="brand-sub" style="font-weight: 600; color: var(--accent);">{{.ServerLocation}}</div>
+				{{end}}
+				{{if .ListenAddr}}
+				<div class="brand-sub">
+					stratum:{{addrPort .ListenAddr}}{{if .StratumTLSListen}} / tls:{{addrPort .StratumTLSListen}}{{end}}
+				</div>
+				{{end}}
+				{{if .Tagline}}
+				<div class="brand-sub">{{.Tagline}}</div>
+				{{end}}
+			</div>
+		</div>
+		<nav class="header-links">
+			<a class="header-link home-link" href="/">🏠 Overview</a>
+			<div class="header-dropdown">
+				<button class="header-link more-info-toggle" id="moreInfoMenuButton" type="button" aria-haspopup="true">
+					More Info ▼
+				</button>
+				<div class="header-dropdown-menu" role="menu" aria-labelledby="moreInfoMenuButton">
+					<a class="header-dropdown-link" role="menuitem" href="/about">ℹ️ About Us</a>
+					<a class="header-dropdown-link" role="menuitem" href="/pool">💎 Pool Stats</a>
+					<a class="header-dropdown-link" role="menuitem" href="/node">🔗 Bitcoin Node Info</a>
+					<a class="header-dropdown-link" role="menuitem" href="/server">🖥️ Server Stats</a>
+				</div>
+			</div>
+			<a class="header-link poolcensus-link" href="https://m45core.com:8443/" target="_blank" rel="noopener noreferrer">🔍 PoolCensus</a>
+			<a class="header-link worker-login-link" href="/worker">👤 Sign-In</a>
+			<span class="header-sep" aria-hidden="true"></span>
+			{{if .GitHubURL}}
+			<a class="header-link github-link" href="{{.GitHubURL}}" target="_blank" rel="noopener noreferrer">GitHub</a>
+			{{end}}
+			{{if .DiscordURL}}
+			<a class="header-link discord-link" href="{{.DiscordURL}}" target="_blank" rel="noopener noreferrer">Discord</a>
+			{{end}}
+			<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+				<span class="theme-toggle-icon">🌙</span>
+			</button>
+		</nav>
+	</div>
+</header>
+{{range .Warnings}}
+<div class="warning-banner">
+	<span class="warning-title">Warning</span>
+	<span class="warning-text">{{.}}</span>
+</div>
+{{end}}
+{{end}}
+
+{{define "footer"}}
+<p class="text-sm" style="margin-top:8px;color:#646b86;">
+	<span class="mono">{{.PoolSoftware}}</span>
+	&mdash; build: <span class="mono">{{.BuildTime}}</span>
+</p>
+	<div class="text-sm" style="margin-top:4px;color:#646b86;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+		{{if .PoolDonationAddress}}
+		<div>
+			Donate to this pool:
+			<a href="bitcoin:{{.PoolDonationAddress}}" class="code-box copyable" title="Click to copy or open in wallet" data-copy="{{.PoolDonationAddress}}" style="text-decoration:none;color:inherit;">{{.PoolDonationAddress}}</a>
+		</div>
+		{{end}}
+	</div>
+<p class="text-sm" style="margin-top:8px;color:#646b86;text-align:center;">
+	By connecting mining device(s) or software to this pool, you acknowledge and agree to be bound by the <a href="/terms" style="color:inherit;text-decoration:underline;">Terms of Use</a> and acknowledge that you have reviewed the <a href="/privacy" style="color:inherit;text-decoration:underline;">Privacy Policy</a>.
+</p>
+<script>
+// Theme switcher - maintains theme preference across page loads
+(function() {
+	const themeToggle = document.getElementById('themeToggle');
+	const themeIcon = document.querySelector('.theme-toggle-icon');
+
+	// Get saved theme or default to dark
+	const savedTheme = localStorage.getItem('theme') || 'dark';
+
+	// Apply theme on load
+	function applyTheme(theme) {
+		if (theme === 'light') {
+			document.documentElement.setAttribute('data-theme', 'light');
+			if (themeIcon) themeIcon.textContent = '☀️';
+		} else {
+			document.documentElement.removeAttribute('data-theme');
+			if (themeIcon) themeIcon.textContent = '🌙';
+		}
+	}
+
+	// Initialize theme
+	applyTheme(savedTheme);
+
+	// Toggle theme on button click
+	if (themeToggle) {
+		themeToggle.addEventListener('click', function() {
+			const currentTheme = document.documentElement.getAttribute('data-theme');
+			const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+			applyTheme(newTheme);
+			localStorage.setItem('theme', newTheme);
+		});
+	}
+})();
+
+// Copy-to-clipboard functionality for code boxes
+document.addEventListener('click', function(e) {
+	const copyable = e.target.closest('.copyable');
+	if (!copyable) return;
+
+	const text = copyable.dataset.copy || copyable.textContent;
+	navigator.clipboard.writeText(text).then(function() {
+		const original = copyable.style.background;
+		copyable.style.background = 'var(--accent-soft)';
+		setTimeout(function() {
+			copyable.style.background = original;
+		}, 200);
+	}).catch(function(err) {
+		console.error('Failed to copy:', err);
+	});
+});
+(function() {
+	const root = document.documentElement;
+	const header = document.querySelector('header');
+	if (!header) return;
+
+	function updatePagePadding() {
+		const height = header.getBoundingClientRect().height;
+		const padding = Math.ceil(height + 16);
+		root.style.setProperty('--page-top-padding', `${padding}px`);
+	}
+
+	updatePagePadding();
+	window.addEventListener('resize', updatePagePadding);
+	if (window.ResizeObserver) {
+		new ResizeObserver(updatePagePadding).observe(header);
+	}
+})();
+</script>
+{{end}}
