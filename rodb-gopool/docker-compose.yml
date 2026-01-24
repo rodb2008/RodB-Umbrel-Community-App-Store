@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   gopool:
-    image: RodB2008com/gopool:latest
+    image: rodb2008com/gopool:latest
     container_name: gopool-container
     # Restarts the app automatically if it crashes or the host reboots
     restart: unless-stopped
