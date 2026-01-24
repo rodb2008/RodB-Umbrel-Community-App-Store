@@ -3,7 +3,7 @@ manifestVersion: 1
 id: rodb-gopool
 name: goPool
 tagline: Dozzle is a real-time log viewer for docker containers
-icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-dozzle/logo.png
+icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
 category: Development
 port: 24080
 version: v0.4.1
@@ -25,9 +25,9 @@ dependencies: []
 repo: https://github.com/rodb2008/RodB-Umbrel-Community-App-Stor
 support: https://github.com/rodb2008/RodB-Umbrel-Community-App-Stor
 gallery:
-  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-dozzle/1.jpg
-  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-dozzle/2.jpg
-  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-dozzle/3.jpg
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/1.jpg
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/2.jpg
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/3.jpg
 path: ""
 defaultUsername: ""
 defaultPassword: ""

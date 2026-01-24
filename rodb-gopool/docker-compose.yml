@@ -1,14 +1,11 @@
-umbrel@umbrel M45Core:~/umbrel/app-data/goPool-app$cat docker-compose.yml
 version: "3.8"
 
 services:
   gopool:
     image: RodB2008com/gopool:latest
     container_name: gopool-container
-
     # Restarts the app automatically if it crashes or the host reboots
     restart: unless-stopped
-
     # Map host port to container port (adjust 8080 if your app uses a different port)
     ports:
       - "8080:23443"
@@ -17,17 +14,15 @@ services:
       - "23456:23456"
       - "24333:24333"
       - "24443:24443"
-
     # Mount local directories into the container
     volumes:
       - ./data:/app/data
       - ./scripts:/app/scripts
       - ./logo.png:/app/logo.png:ro  # ':ro' makes it read-only for safety
       # Map the Bitcoin cookie from your Umbrel host to the path the app expects
-      # - /home/umbrel/umbrel/app-data/bitcoin/data/bitcoin/.cookie:/home/umbrel/.cookie:ro
+      - /home/umbrel/umbrel/app-data/bitcoin/data/bitcoin/.cookie:/home/umbrel/.cookie:ro
       # Map the Bitcoin cookie from your Umbrel host to the path the app expects
-      - /home/umbrel/.cookie:/home/umbrel/.cookie:ro
-
-    # Environment variables (if your Go app uses them)
+      # - /home/umbrel/.cookie:/home/umbrel/.cookie:ro
+      # Environment variables (if your Go app uses them)
     environment:
       - APP_ENV=production
