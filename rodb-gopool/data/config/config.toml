@@ -141,13 +141,13 @@
   pool_listen = ":23456"
 
   # HTTP address for the status UI (default :80).
-  status_listen = ":23080"
+  status_listen = "0.0.0.0:23080"
 
   # Canonical public URL used for redirects/session cookies; include scheme (http/https).
   status_public_url = "http://rodb2008.com"
 
   # Optional HTTPS address that serves the status UI with TLS (default :443).
-  status_tls_listen = ":23443"
+  status_tls_listen = "0.0.0.0:23443"
 
 [stratum]
 

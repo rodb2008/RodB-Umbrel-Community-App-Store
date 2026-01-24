@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     environment:
       APP_HOST: gopool-container
-      APP_PORT: 23443 # Port your app's web UI is listening on
+      APP_PORT: 23080 # Port your app's web UI is listening on
     networks:
       - umbrel_main_network
 
