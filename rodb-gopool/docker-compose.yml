@@ -2,7 +2,7 @@ services:
   app_proxy:
     environment:
       APP_HOST: rodb-gopool-container
-      APP_PORT: 23080
+      APP_PORT: 80
     container_name: rodb-gopool_app_proxy_1
   gopool:
     image: rodb2008com/gopool:latest
@@ -20,4 +20,4 @@ services:
         /home/umbrel/umbrel/app-data/bitcoin/data/bitcoin/.cookie:/home/umbrel/.cookie:ro
     environment:
       - APP_ENV=production
-      - PORT=23080
+      - PORT=80
