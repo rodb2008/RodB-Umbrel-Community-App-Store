@@ -30,7 +30,7 @@
   max_difficulty = 65536.0
 
   # Minimum difficulty advertised to miners.
-  min_difficulty = 1024.0
+  min_difficulty = 256.0
 
 [hashrate]
 
