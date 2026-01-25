@@ -9,6 +9,7 @@ services:
     container_name: rodb-gopool-container
     restart: unless-stopped
     ports:
+      - '23443:23443'
       - '23456:23456'
       - '24333:24333'
       - '24443:24443'
