@@ -31,18 +31,17 @@ widgets:
   - id: "stats"
     type: "four-stats" # Standard 2x2 grid widget type
     name: "goPool Stats"
-    # endpoint: "http://192.168.6.6:23000/widgets/stats" # Points to your Flask route
-    endpoint: "http://widget-server:23000/widgets/stats"
+    endpoint: "widget-server:23000/widgets/stats"
     refresh: 30s # Recommended value
     items:
       - label: "Hashrate"
-        jsonPath: "items[0].text" # Maps to 'text' in the first item
+        jsonPath: "items[0].text"
       - label: "Workers"
-        jsonPath: "items[1].text" # Maps to 'text' in the second item
+        jsonPath: "items[1].text"
       - label: "Best Share"
-        jsonPath: "items[2].text" # Maps to 'text' in the third item
+        jsonPath: "items[2].text"
       - label: "Shares per min"
-        jsonPath: "items[3].text" # Maps to 'text' in the fourth item
+        jsonPath: "items[3].text"
     example:
       type: "four-stats"
       items:

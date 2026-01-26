@@ -14,6 +14,7 @@ services:
     container_name: rodb-gopool-widget_app_proxy_1
     networks:
       - umbrel_main_network
+
 networks:
   umbrel_main_network:
     external: true
