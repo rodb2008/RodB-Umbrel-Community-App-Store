@@ -1,7 +1,7 @@
 ---
 manifestVersion: 1
 id: rodb-gopool-widget
-name: goPool-Web-Widget
+name: goPool Stats
 tagline: Web Widget for goPool to display Pool Stats on Umbrel WebUI
 icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
 category: Bitcoin
@@ -29,14 +29,29 @@ widgets:
   - id: "stats"
     type: "four-stats" # Standard 2x2 grid widget type
     name: "goPool Stats"
-    endpoint: "192.168.6.6:23000/widgets/stats" # Points to your Flask route
+    endpoint: "http://127.0.0.1:23000/widgets/stats" # Points to your Flask route
     refresh: 30s # Refresh every 30 seconds
     items:
       - label: "Hashrate"
         jsonPath: "hashrate1m"
-      - label: "Accepted"
-        jsonPath: "accepted"
+      - label: "Workers"
+        jsonPath: "workers"
       - label: "Best Share"
         jsonPath: "bestshare"
-      - label: "Workers"
-        jsonPath: "Workers"
+      - label: "Shares per min"
+        jsonPath: "Shares per min"
+    example:
+      type: "four-stats"
+      items:
+        - title: "Pool Hashrate"
+          text: "968"
+          subtext: "GH/s"
+        - title: "Workers"
+          text: "2"
+          subtext: ""
+        - title: "Best Share"
+          text: "1.1"
+          subtext: "G"
+        - title: "Share Accepted"
+          text: "47.0"
+          subtext: "per min"
