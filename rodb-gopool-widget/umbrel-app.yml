@@ -35,7 +35,6 @@ widgets:
     endpoint: "http://app:23000/widgets/stats"
     refresh: 30s # Recommended value
     items:
-    items:
       - label: "Hashrate"
         jsonPath: "items[0].text" # Maps to 'text' in the first item
       - label: "Workers"
