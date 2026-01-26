@@ -55,6 +55,6 @@ widgets:
         - title: "Best Share"
           text: "1.1"
           subtext: "G"
-        - title: "Share Accepted"
+        - title: "Share Rate"
           text: "47.0"
-          subtext: "per min"
+          subtext: "/min"

@@ -12,6 +12,8 @@ services:
       APP_HOST: gopool-widget
       APP_PORT: 23000
     container_name: rodb-gopool-widget_app_proxy_1
+    networks:
+      - umbrel_main_network
 networks:
   umbrel_main_network:
     external: true
