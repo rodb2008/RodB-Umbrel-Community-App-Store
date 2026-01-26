@@ -6,7 +6,7 @@ tagline: Dozzle is a real-time log viewer for docker containers
 icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
 category: Bitcoin
 port: 23080
-version: v0.4.1
+version: v0.5.1-dev
 description: >-
   goPool
   
@@ -15,9 +15,9 @@ description: >-
   Reality check - Solo mining is probabilistic. Small miners can go months or years without finding a block. We don't know when--or if--you'll find one.
 
 releaseNotes: |-
-  Initial Release
-
-    Released - 2026-01-23
+  Releases:
+    v0.5.1-dev  Released - 2026-01-26 (Updated and more flexiable Configuration Settings)
+    v0.4.1-dev  Released - 2026-01-23 (Initial Docker Version for UmbrelOS)
     
 developer: Distortions81
 website: https://m45core.com
