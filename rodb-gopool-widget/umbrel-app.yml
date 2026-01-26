@@ -35,7 +35,7 @@ widgets:
       - label: "Hashrate"
         jsonPath: "hashrate1m"
       - label: "Workers"
-        jsonPath: "workers"
+        jsonPath: "Workers"
       - label: "Best Share"
         jsonPath: "bestshare"
       - label: "Shares per min"
