@@ -33,3 +33,24 @@ defaultUsername: ""
 defaultPassword: ""
 submitter: RodB
 submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
+widgets:
+  - id: "stats"
+    type: "four-stats"
+    refresh: "30s"
+    endpoint: "widget-server:3000/widgets/pool"
+    link: ""
+    example:
+      type: "four-stats"
+      link: ""
+      items:
+        - title: "hashrate1m"
+          text: "2.10"
+          subtext: "Th/s"
+        - title: "Workers"
+          text: "2"
+        - title: "bestshare"
+          text: "21"
+          subtext: "G"
+        - title: "accepted"
+          text: "210"
+          subtext: "M"
