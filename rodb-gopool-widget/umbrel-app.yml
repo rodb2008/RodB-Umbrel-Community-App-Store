@@ -11,7 +11,7 @@ description: "Mining stats from your local goPool"
 releaseNotes: |-
   Initial Release
 
-    Released - 2026-01-25
+    Released - 2026-01-26
 
 developer: RodB
 website: https://m45core.com
@@ -29,8 +29,8 @@ widgets:
   - id: "stats"
     type: "four-stats" # Standard 2x2 grid widget type
     name: "goPool Stats"
-    endpoint: "http://127.0.0.1:23000/widgets/stats" # Points to your Flask route
-    refresh: 30s # Refresh every 30 seconds
+    endpoint: "http://rodb-gopool-widget_1:23000/widgets/stats" # Points to your Flask route
+    refresh: 5s # Refresh every 5 seconds but probably should be 30s
     items:
       - label: "Hashrate"
         jsonPath: "hashrate1m"
