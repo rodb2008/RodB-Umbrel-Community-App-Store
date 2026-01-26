@@ -28,11 +28,11 @@ defaultPassword: ""
 submitter: RodB
 submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
 widgets:
-  - id: "app"
+  - id: "stats"
     type: "four-stats" # Standard 2x2 grid widget type
     name: "goPool Stats"
     # endpoint: "http://192.168.6.6:23000/widgets/stats" # Points to your Flask route
-    endpoint: "http://app:23000/widgets/stats"
+    endpoint: "http://widget-server:23000/widgets/stats"
     refresh: 30s # Recommended value
     items:
       - label: "Hashrate"
