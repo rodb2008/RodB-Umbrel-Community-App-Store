@@ -4,7 +4,7 @@ services:
     restart: unless-stopped
     ports:
       - '23000:23000'
-    container_name: rodb-gopool-widget_gopool-widget_1
+    container_name: rodb-gopool-widget_1
     networks:
       - umbrel_main_network
 networks:
