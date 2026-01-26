@@ -6,6 +6,8 @@ tagline: Web Widget for goPool to display Pool Stats on Umbrel WebUI
 icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
 category: Bitcoin
 port: 23000
+app_proxy:
+  port: 23000
 version: v0.1
 description: "Mining stats from your local goPool"
 releaseNotes: |-
@@ -26,10 +28,11 @@ defaultPassword: ""
 submitter: RodB
 submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
 widgets:
-  - id: "stats"
+  - id: "gopool-widget"
     type: "four-stats" # Standard 2x2 grid widget type
     name: "goPool Stats"
-    endpoint: "http://gopool-widget:23000/widgets/stats" # Points to your Flask route
+    # endpoint: "http://192.168.6.6:23000/widgets/stats" # Points to your Flask route
+    endpoint: "http://gopool-widget:23000/widgets/stats"
     refresh: 5s # Refresh every 5 seconds but probably should be 30s
     items:
       - label: "Hashrate"

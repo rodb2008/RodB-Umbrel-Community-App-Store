@@ -2,11 +2,16 @@ services:
   gopool-widget:
     image: rodb2008com/gopool-api-etl:v1
     restart: unless-stopped
-    ports:
-      - '23000:23000'
     container_name: rodb-gopool-widget_1
     networks:
       - umbrel_main_network
+  app_proxy:
+    image: getumbrel/app-proxy:1.0.0
+    restart: unless-stopped
+    environment:
+      APP_HOST: gopool-widget
+      APP_PORT: 23000
+    container_name: rodb-gopool-widget_app_proxy_1
 networks:
   umbrel_main_network:
     external: true
