@@ -29,7 +29,7 @@ widgets:
   - id: "stats"
     type: "four-stats" # Standard 2x2 grid widget type
     name: "goPool Stats"
-    endpoint: "http://rodb-gopool-widget_1:23000/widgets/stats" # Points to your Flask route
+    endpoint: "http://gopool-widget:23000/widgets/stats" # Points to your Flask route
     refresh: 5s # Refresh every 5 seconds but probably should be 30s
     items:
       - label: "Hashrate"
