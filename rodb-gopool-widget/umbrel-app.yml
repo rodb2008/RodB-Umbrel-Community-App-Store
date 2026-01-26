@@ -33,16 +33,17 @@ widgets:
     name: "goPool Stats"
     # endpoint: "http://192.168.6.6:23000/widgets/stats" # Points to your Flask route
     endpoint: "http://app:23000/widgets/stats"
-    refresh: 5s # Refresh every 5 seconds but probably should be 30s
+    refresh: 30s # Recommended value
+    items:
     items:
       - label: "Hashrate"
-        jsonPath: "hashrate1m"
+        jsonPath: "items[0].text" # Maps to 'text' in the first item
       - label: "Workers"
-        jsonPath: "Workers"
+        jsonPath: "items[1].text" # Maps to 'text' in the second item
       - label: "Best Share"
-        jsonPath: "bestshare"
+        jsonPath: "items[2].text" # Maps to 'text' in the third item
       - label: "Shares per min"
-        jsonPath: "Shares per min"
+        jsonPath: "items[3].text" # Maps to 'text' in the fourth item
     example:
       type: "four-stats"
       items:
