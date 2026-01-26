@@ -1,0 +1,6 @@
+services:
+  gopool-widget:
+    image:  rodb2008com/gopool-api-etl:v1
+    restart: unless-stopped
+    ports:
+      - "23000:23000"

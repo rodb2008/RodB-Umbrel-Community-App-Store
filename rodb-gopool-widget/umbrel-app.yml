@@ -1,0 +1,35 @@
+---
+manifestVersion: 1
+id: rodb-gopool-widget
+name: goPool-Web-Widget
+tagline: Web Widget for goPool to display Pool Stats on Umbrel WebUI
+icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
+category: Bitcoin
+port: 23000
+version: v0.1
+description: >-
+  goPool
+  
+  We're a solo mining pool running open-source software with split-coinbase payouts and transparent operations. This is true solo mining: if your miner finds a block, you get the block reward. We don't split rewards among miners--the miner who finds it gets paid.
+
+  Reality check - Solo mining is probabilistic. Small miners can go months or years without finding a block. We don't know when--or if--you'll find one.
+
+releaseNotes: |-
+  Initial Release
+
+    Released - 2026-01-25
+    
+developer: RodB
+website: https://m45core.com
+dependencies: []
+repo: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store
+support: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store
+gallery:
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/1.png
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/2.png
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/3.png
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+submitter: RodB
+submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
