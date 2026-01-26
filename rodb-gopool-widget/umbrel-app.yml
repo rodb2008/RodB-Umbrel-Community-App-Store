@@ -26,12 +26,12 @@ defaultPassword: ""
 submitter: RodB
 submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
 widgets:
-  - id: "gopool-stats"
+  - id: "stats"
     type: "four-stats" # Standard 2x2 grid widget type
-    name: "goPool Status"
-    endpoint: "http://192.168.6.6:23000/widgets/stats" # Points to your Flask route
-    refreshInterval: 30 # Refresh every 30 seconds
-    stats:
+    name: "goPool Stats"
+    endpoint: "192.168.6.6:23000/widgets/stats" # Points to your Flask route
+    refresh: 30s # Refresh every 30 seconds
+    items:
       - label: "Hashrate"
         jsonPath: "hashrate1m"
       - label: "Accepted"
