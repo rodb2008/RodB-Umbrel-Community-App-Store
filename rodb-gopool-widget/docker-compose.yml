@@ -1,6 +1,12 @@
 services:
   gopool-widget:
-    image:  rodb2008com/gopool-api-etl:v1
+    image: rodb2008com/gopool-api-etl:v1
     restart: unless-stopped
     ports:
-      - "23000:23000"
+      - '23000:23000'
+    container_name: rodb-gopool-widget_gopool-widget_1
+    networks:
+      - umbrel_main_network
+networks:
+  umbrel_main_network:
+    external: true

@@ -12,7 +12,7 @@ releaseNotes: |-
   Initial Release
 
     Released - 2026-01-25
-    
+
 developer: RodB
 website: https://m45core.com
 dependencies: []
@@ -31,7 +31,7 @@ widgets:
   - id: "gopool-stats"
     type: "four-stats" # Standard 2x2 grid widget type
     name: "goPool Status"
-    endpoint: "/widgets/stats" # Points to your Flask route
+    endpoint: "http://gopool-widget:2300/widgets/stats" # Points to your Flask route
     refreshInterval: 30 # Refresh every 30 seconds
     stats:
       - label: "Hashrate"
