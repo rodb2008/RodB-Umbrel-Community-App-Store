@@ -2,7 +2,7 @@
 manifestVersion: 1
 id: rodb-gopool
 name: goPool
-tagline: Dozzle is a real-time log viewer for docker containers
+tagline: Solo Bitcoin Mining Pool written in goLang
 icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
 category: Bitcoin
 port: 23080
@@ -10,7 +10,7 @@ version: v0.5.1-dev
 description: >-
   goPool
   
-  We're a solo mining pool running open-source software with split-coinbase payouts and transparent operations. This is true solo mining: if your miner finds a block, you get the block reward. We don't split rewards among miners--the miner who finds it gets paid.
+  A solo mining pool running open-source software with split-coinbase payouts and transparent operations. This is true solo mining: if your miner finds a block, you get the block reward. We don't split rewards among miners--the miner who finds it gets paid.
 
   Reality check - Solo mining is probabilistic. Small miners can go months or years without finding a block. We don't know when--or if--you'll find one.
 
@@ -21,7 +21,8 @@ releaseNotes: |-
     
 developer: Distortions81
 website: https://m45core.com
-dependencies: []
+dependencies:
+  - bitcoin
 repo: https://github.com/rodb2008/RodB-Umbrel-Community-App-Stor
 support: https://github.com/rodb2008/RodB-Umbrel-Community-App-Stor
 gallery:

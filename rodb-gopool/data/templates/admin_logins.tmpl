@@ -1,0 +1,199 @@
+{{/* Admin saved logins page template */}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="icon" type="image/png" sizes="64x64" href="/favicon.png">
+	<meta charset="UTF-8">
+	<title>{{if .BrandDomain}}{{.BrandDomain}}{{else}}{{.BrandName}}{{end}} Admin Saved Logins</title>
+	<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+	{{template "header" .}}
+	<div class="page admin-page">
+		<h1>Admin Control Panel</h1>
+		<p class="text-sm" style="margin-top:4px;">
+			View Clerk login IDs and their saved worker slots. Select the logins you want to delete or ban, enter the admin password once, and apply the action below.
+		</p>
+		{{if .AdminNotice}}
+		<div class="card">
+			<p class="text-sm">{{.AdminNotice}}</p>
+		</div>
+		{{end}}
+		{{if not .AdminEnabled}}
+		<div class="card">
+			<p class="text-sm">
+				The admin panel is disabled. Enable it by editing <span class="mono">{{.AdminConfigPath}}</span> and setting <span class="mono">enabled = true</span>.
+			</p>
+		</div>
+		{{else if not .LoggedIn}}
+		<div class="card">
+			<p class="text-sm">
+				Sign in on the <a href="/admin">main admin page</a> to manage saved login data.
+			</p>
+		</div>
+		{{else}}
+		{{template "admin-nav" .}}
+		<div class="card">
+			<div class="label">Saved logins</div>
+			<p class="text-sm" style="margin:4px 0 10px 0;">
+				Deleting a login removes all saved workers for that Clerk account. Banning disconnects any active connections matching the saved workers.
+			</p>
+			{{if .AdminSavedWorkerRows}}
+			<div class="admin-toolbar">
+				<div class="toolbar-left">
+					<label class="label" for="logins-toolbar-password">Admin password</label>
+					<input id="logins-toolbar-password" class="textfield toolbar-password" type="password" placeholder="Admin password">
+				</div>
+				<div class="toolbar-actions">
+					<button class="btn btn-secondary" type="button" id="logins-toolbar-delete" disabled>Delete selected</button>
+					<button class="btn btn-danger" type="button" id="logins-toolbar-ban" disabled>Ban selected</button>
+				</div>
+			</div>
+			<form id="loginsActionsForm" style="display:none;">
+				<input type="hidden" name="password" id="loginsToolbarPasswordField">
+				<div id="loginsToolbarUsers"></div>
+				<div id="loginsToolbarHashes"></div>
+			</form>
+			<div class="admin-pagination">
+				<div class="admin-pagination-summary text-sm">
+					{{if gt .AdminLoginPagination.TotalItems 0}}
+					Showing {{.AdminLoginPagination.RangeStart}} – {{.AdminLoginPagination.RangeEnd}} of {{.AdminLoginPagination.TotalItems}}
+					{{else}}
+					Showing 0 entries
+					{{end}}
+				</div>
+				<form class="pagination-form" method="get" action="/admin/logins">
+					<label for="logins-per-page">Items per page</label>
+					<select id="logins-per-page" name="per_page" onchange="this.form.submit()">
+						{{range $opt := .AdminPerPageOptions}}
+						<option value="{{$opt}}" {{if eq $opt $.AdminLoginPagination.PerPage}}selected{{end}}>{{$opt}}</option>
+						{{end}}
+					</select>
+					<input type="hidden" name="page" value="1">
+				</form>
+				<div class="pagination-links">
+					{{if .AdminLoginPagination.HasPrevPage}}
+					<a href="/admin/logins?page={{.AdminLoginPagination.PrevPage}}&per_page={{.AdminLoginPagination.PerPage}}">Previous</a>
+					{{end}}
+					{{if .AdminLoginPagination.HasNextPage}}
+					<a href="/admin/logins?page={{.AdminLoginPagination.NextPage}}&per_page={{.AdminLoginPagination.PerPage}}">Next</a>
+					{{end}}
+				</div>
+			</div>
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>User ID</th>
+							<th>Workers</th>
+							<th>Saved</th>
+							<th>Online</th>
+							<th>Select</th>
+						</tr>
+					</thead>
+					<tbody>
+						{{range .AdminSavedWorkerRows}}
+						<tr>
+							<td class="mono" style="font-size:13px;">{{.UserID}}</td>
+							<td>
+								<ul class="text-sm" style="margin:4px 0;padding-left:16px;">
+									{{range .Workers}}
+									<li>{{.Name}}{{if .Hash}} <span class="mono" style="font-size:11px;">{{shortID .Hash}}</span>{{end}}</li>
+									{{end}}
+								</ul>
+							</td>
+							<td>{{len .Workers}} ({{.NotifyCount}} notify)</td>
+							<td>
+								{{if .OnlineConnections}}
+									{{range .OnlineConnections}}
+									<div class="badge">{{shortID .ConnectionLabel}} ({{.Listener}})</div>
+									{{end}}
+								{{else}}
+									<span class="text-sm">offline</span>
+								{{end}}
+							</td>
+							<td>
+								<input type="checkbox" class="admin-login-checkbox" data-user="{{.UserID}}">
+								<div class="admin-row-hashes" style="display:none;">
+									{{range .WorkerHashes}}<span data-hash="{{.}}"></span>{{end}}
+								</div>
+							</td>
+						</tr>
+						{{end}}
+					</tbody>
+				</table>
+			</div>
+			{{else}}
+			<p class="text-sm">
+				No saved login entries are available. This may mean the saved worker store is empty or not yet configured.
+			</p>
+			{{end}}
+		</div>
+		{{end}}
+	</div>
+	{{template "footer" .}}
+	<script>
+	(function() {
+		const form = document.getElementById('loginsActionsForm');
+		const passwordInput = document.getElementById('logins-toolbar-password');
+		const passwordField = document.getElementById('loginsToolbarPasswordField');
+		const userContainer = document.getElementById('loginsToolbarUsers');
+		const hashContainer = document.getElementById('loginsToolbarHashes');
+		const checkboxes = Array.from(document.querySelectorAll('.admin-login-checkbox'));
+		const deleteBtn = document.getElementById('logins-toolbar-delete');
+		const banBtn = document.getElementById('logins-toolbar-ban');
+
+		function updateButtons() {
+			const selected = checkboxes.filter(cb => cb.checked);
+			const enabled = selected.length > 0;
+			deleteBtn.disabled = !enabled;
+			banBtn.disabled = !enabled;
+			return selected;
+		}
+
+		function submitAction(action, includeHashes) {
+			const selected = updateButtons();
+			if (!selected.length) {
+				return;
+			}
+			userContainer.innerHTML = '';
+			hashContainer.innerHTML = '';
+			const users = new Set();
+			selected.forEach(cb => {
+				const user = cb.dataset.user || '';
+				if (!user || users.has(user)) {
+					return;
+				}
+				users.add(user);
+				const input = document.createElement('input');
+				input.type = 'hidden';
+				input.name = 'user_id';
+				input.value = user;
+				userContainer.appendChild(input);
+				if (includeHashes) {
+					const hashNodes = cb.closest('tr').querySelectorAll('.admin-row-hashes span');
+					hashNodes.forEach(node => {
+						const hash = node.dataset.hash || '';
+						if (!hash) {
+							return;
+						}
+						const hInput = document.createElement('input');
+						hInput.type = 'hidden';
+						hInput.name = 'worker_hash';
+						hInput.value = hash;
+						hashContainer.appendChild(hInput);
+					});
+				}
+			});
+			passwordField.value = passwordInput.value;
+			form.action = action;
+			form.submit();
+		}
+
+		checkboxes.forEach(cb => cb.addEventListener('change', updateButtons));
+		deleteBtn.addEventListener('click', () => submitAction('/admin/logins/delete', false));
+		banBtn.addEventListener('click', () => submitAction('/admin/logins/ban', true));
+	})();
+	</script>
+</body>
+</html>
