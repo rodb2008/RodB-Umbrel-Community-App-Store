@@ -1,15 +1,22 @@
 services:
-  app_proxy:
+  app_proxy_gopool:
+    image: getumbrel/app-proxy:1.0.0
+    restart: unless-stopped
+    volumes:
+      - /home/umbrel/umbrel/app-data/rodb-gopool/umbrel-app.yml:/extra/umbrel-app.yml:ro
     environment:
-      APP_HOST: rodb-gopool-container
-      APP_PORT: 80
+      - APP_HOST=rodb-gopool-container
+      - APP_PORT=80
     container_name: rodb-gopool_app_proxy_1
+    ports:
+      - '23080:4000'
+    networks:
+      - umbrel_main_network
   gopool:
     image: rodb2008com/gopool:latest
     container_name: rodb-gopool-container
     restart: unless-stopped
     ports:
-      - '8081:80'
       - '23443:23443'
       - '23456:23456'
       - '24333:24333'
@@ -18,8 +25,29 @@ services:
       - ${APP_DATA_DIR}/data:/app/data
       - ${APP_DATA_DIR}/scripts:/app/scripts
       - ${APP_DATA_DIR}/logo.png:/app/logo.png:ro
-      - >-
-        /home/umbrel/umbrel/app-data/bitcoin/data/bitcoin/.cookie:/home/umbrel/.cookie:ro
+      - /home/umbrel/umbrel/app-data/bitcoin/data/bitcoin/.cookie:/home/umbrel/.cookie:ro
     environment:
       - APP_ENV=production
       - PORT=80
+    networks:
+      - umbrel_main_network
+  widget-server:
+    image: rodb2008com/gopool-api-etl:v1
+    restart: unless-stopped
+    container_name: rodb-gopool-widget_1
+    networks:
+      - umbrel_main_network
+  app_proxy_widget:
+    image: getumbrel/app-proxy:1.0.0
+    restart: unless-stopped
+    volumes:
+      - /home/umbrel/umbrel/app-data/rodb-gopool/umbrel-app.yml:/extra/umbrel-app.yml:ro
+    environment:
+      - APP_HOST=widget-server
+      - APP_PORT=23000
+    container_name: rodb-gopool-widget_app_proxy_1
+    networks:
+      - umbrel_main_network
+networks:
+  umbrel_main_network:
+    external: true
