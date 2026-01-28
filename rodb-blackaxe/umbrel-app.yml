@@ -1,6 +1,6 @@
 ---
 manifestVersion: 1
-id: blackaxe-mining-manager
+id: rodb-blackaxe
 name: BlackAxe v12.0 - Mining Device Manager for Umbrel Home
 icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-blackaxe/logo.png
 category: Mining
