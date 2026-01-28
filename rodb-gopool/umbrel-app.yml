@@ -36,3 +36,35 @@ defaultUsername: ""
 defaultPassword: ""
 submitter: RodB
 submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
+
+# Widget Configuration
+widgets:
+  - id: "stats"
+    type: "four-stats"
+    name: "goPool Stats"
+    endpoint: "widget-server:23000/widgets/stats"
+    refresh: 10s
+    items:
+      - label: "Hashrate"
+        jsonPath: "items[0].text"
+      - label: "Workers"
+        jsonPath: "items[1].text"
+      - label: "Best Share"
+        jsonPath: "items[2].text"
+      - label: "Shares per min"
+        jsonPath: "items[3].text"
+    example:
+      type: "four-stats"
+      items:
+        - title: "Pool Hashrate"
+          text: "968"
+          subtext: "GH/s"
+        - title: "Workers"
+          text: "2"
+          subtext: ""
+        - title: "Best Share"
+          text: "1.1"
+          subtext: "G"
+        - title: "Share Rate"
+          text: "47.0"
+          subtext: "/min"
