@@ -4,7 +4,7 @@ id: rodb-gopool-widget
 name: goPool Stats
 tagline: Web Widget for goPool to display Pool Stats on Umbrel WebUI
 icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
-category: Bitcoin
+category: Development
 port: 23000
 app_proxy:
   port: 23000
