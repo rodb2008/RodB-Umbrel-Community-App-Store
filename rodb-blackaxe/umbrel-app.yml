@@ -1,41 +1,34 @@
----
 manifestVersion: 1
 id: rodb-blackaxe
-name: BlackAxe v12.0 - Mining Device Manager for Umbrel Home
-icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-blackaxe/logo.png
+name: BlackAxe Dashboard
+icon: >-
+  https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-blackaxe/logo.png
 category: Mining
 port: 30211
 tagline: BlackAxe Dashboard to control your Bitcoin Miners
-version: "0.12.0"
+version: 0.12.0
 description: A high-performance mining manager for Bitcoin and altcoins.
-releaseNotes: |-
-    ### Supported Devices
-    - Bitaxe (Ultra, Supra, Gamma, Hex)
-    - NerdQAxe++
-    - Avalon (Nano, Mini, Q, and larger models)
-    - Antminer
-    - Whatsminer
-    - Other CGMiner-compatible devices 
+releaseNotes: >-
+  ### Supported Devices - Bitaxe (Ultra, Supra, Gamma, Hex) - NerdQAxe++ -
+  Avalon (Nano, Mini, Q, and larger models) - Antminer - Whatsminer - Other
+  CGMiner-compatible devices 
 
-    ## Features
-    - Real-time monitoring of all mining devices
-    - Automatic device discovery via network scan
-    - Temperature and power monitoring
-    - Share statistics and best difficulty tracking
-    - Solo block detection
-    - Alert system for offline miners
-    - 24-hour history charts
-    
-    Released - 2026-01-27
+  ## Features - Real-time monitoring of all mining devices - Automatic device
+  discovery via network scan - Temperature and power monitoring - Share
+  statistics and best difficulty tracking - Solo block detection - Alert system
+  for offline miners - 24-hour history charts
 
+  Released - 2026-01-27
 developer: BlackHole
-website: https://github.com
-repo: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store
-support: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store
+website: 'https://github.com'
+repo: 'https://github.com/rodb2008/RodB-Umbrel-Community-App-Store'
+support: 'https://github.com/rodb2008/RodB-Umbrel-Community-App-Store'
 submitter: RodB
-submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
+submission: 'https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git'
 gallery:
   - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-blackaxe/1.jpg
-path: ""
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-blackaxe/2.jpg
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-blackaxe/3.jpg
+path: ''
 defaultUsername: blackaxe
 defaultPassword: blackaxe
