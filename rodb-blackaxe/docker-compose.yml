@@ -1,0 +1,10 @@
+services:
+  rodb-blackaxe:
+    image: rodb2008com/rodb-blackaxe:latest
+    ports:
+      - "30211:30211"
+    volumes:
+      - ./data:/app/data # Persist your SQLite DB here
+    restart: unless-stopped
+    container_name: rodb-blackaxe_1
+
