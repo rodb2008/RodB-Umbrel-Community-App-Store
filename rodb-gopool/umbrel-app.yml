@@ -1,4 +1,3 @@
----
 manifestVersion: 1
 id: rodb-gopool
 name: goPool
@@ -6,26 +5,22 @@ tagline: Solo Bitcoin Mining Pool written in goLang
 icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
 category: Bitcoin
 port: 23080
-version: v0.5.1-dev3
+version: v0.5.1-dev4
 description: >-
   goPool
-  
   A solo mining pool running open-source software with split-coinbase payouts and transparent operations. This is true solo mining: if your miner finds a block, you get the block reward. We don't split rewards among miners--the miner who finds it gets paid.
-
   Reality check - Solo mining is probabilistic. Small miners can go months or years without finding a block. We don't know when--or if--you'll find one.
-
 releaseNotes: |-
   Releases:
-    v0.5.1-dev3 Released - 2026-01-28 (Updated WebUI, Mobile WebUI and new Umbrel Web Widget
-    v0.5.1-dev2 Released - 2026-01-26 (Updated and more flexiable Configuration Settings)
+    v0.5.1-dev4 Released - 2026-01-28 (Updated WebUI, Mobile WebUI and new Umbrel Web Widget)
+    v0.5.1-dev2 Released - 2026-01-26 (Updated and more flexible Configuration Settings)
     v0.4.1-dev1 Released - 2026-01-23 (Initial Docker Version for UmbrelOS)
-    
 developer: Distortions81 & RodB
 website: https://m45core.com
 dependencies:
   - bitcoin
-repo: https://github.com/rodb2008/RodB-Umbrel-Community-App-Stor
-support: https://github.com/rodb2008/RodB-Umbrel-Community-App-Stor
+repo: https://github.com
+support: https://github.com
 gallery:
   - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/1.png
   - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/2.png
@@ -35,14 +30,15 @@ path: ""
 defaultUsername: ""
 defaultPassword: ""
 submitter: RodB
-submission: https://github.com/rodb2008/RodB-Umbrel-Community-App-Store.git
+submission: https://github.come.git
 
 # Widget Configuration
 widgets:
   - id: "stats"
     type: "four-stats"
     name: "goPool Stats"
-    endpoint: "widget-server:23000/widgets/stats"
+    # Communicates internally with your Flask container
+    endpoint: "rodb-gopool-widget:23000/widgets/stats"
     refresh: 10s
     items:
       - label: "Hashrate"
