@@ -72,8 +72,9 @@
   data_dir = "data"
   payout_address = "bc1qm4ltluu6pc6f26pu995t7tdeazurz4rq7dsnxp"
   rpc_cookie_path = "/home/umbrel/.cookie"
-  rpc_url = "http://172.17.0.16:8332"
-  zmq_block_addr = "tcp://172.17.0.1:28332"
+  rpc_url = "http://172.17.0.1:8332"
+  zmq_hashblock_addr = "tcp://172.17.0.1:28334"
+  zmq_rawblock_addr = "tcp://172.17.0.1:28332"
 
 [server]
   pool_listen = ":23456"
