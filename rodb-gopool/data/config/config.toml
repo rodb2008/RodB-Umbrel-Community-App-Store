@@ -72,14 +72,14 @@
   data_dir = "data"
   payout_address = "bc1qm4ltluu6pc6f26pu995t7tdeazurz4rq7dsnxp"
   rpc_cookie_path = "/home/umbrel/.cookie"
-  rpc_url = "http://192.168.6.6:8332"
-  zmq_block_addr = "tcp://192.168.6.6:28332"
+  rpc_url = "http://172.17.0.16:8332"
+  zmq_block_addr = "tcp://172.17.0.1:28332"
 
 [server]
   pool_listen = ":23456"
-  status_listen = "0.0.0.0:80"
+  status_listen = ":80"
   status_public_url = ""
-  status_tls_listen = "0.0.0.0:23443"
+  status_tls_listen = ""
 
 [stratum]
   stratum_tls_listen = ":24333"
