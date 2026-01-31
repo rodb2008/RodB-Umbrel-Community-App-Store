@@ -80,5 +80,5 @@
   connection_timeout_seconds = 300
 
 [version]
-  ignore_min_version_bits = false
+  ignore_min_version_bits = true
   min_version_bits = 1
