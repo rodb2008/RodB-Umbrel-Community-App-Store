@@ -1,5 +1,6 @@
 {{/* Admin control panel template */}}
 {{define "restart-required"}}<span class="restart-required" title="Requires restart">↻</span>{{end}}
+{{define "sensitive"}}<span class="sensitive" title="Sensitive setting (edit config.toml)">[LOCKED]</span>{{end}}
 {{define "admin-nav"}}
 <div class="admin-tabs">
 	<a class="admin-tab {{if eq .AdminSection "settings"}}active{{end}}" href="/admin">Live settings</a>
@@ -60,6 +61,7 @@
 				<p class="text-sm" style="margin:4px 0 10px 0;">
 					This updates goPool's in-memory configuration immediately. Some settings (listeners, Stratum behavior) still require a reboot to fully take effect.
 					Hover over field labels to see tooltips with extra detail. <span class="restart-required" title="Requires restart">↻</span> indicates a restart is required.
+					Fields marked <span class="sensitive" title="Sensitive setting (edit config.toml)">[LOCKED]</span> are read-only in the admin panel and must be edited in config files.
 				</p>
 				{{if .AdminApplyError}}
 				<p class="text-sm" style="color:#f88d8d;">{{.AdminApplyError}}</p>
@@ -68,16 +70,24 @@
 				<h3 style="margin:0 0 8px 0;">Branding</h3>
 				<div class="grid admin-grid">
 					<div>
-						<div class="label" title="Shown across the status UI as the pool name.">Brand name</div>
-						<input name="status_brand_name" type="text" class="textfield" value="{{.Settings.StatusBrandName}}">
+						<div class="label" title="Shown across the status UI as the pool name.">Brand name {{template "sensitive" .}}</div>
+						<input name="status_brand_name" type="text" class="textfield" value="{{.Settings.StatusBrandName}}" disabled>
 					</div>
 					<div>
-						<div class="label" title="The hostname shown in the UI and used for copy/paste Stratum URLs (usually your public domain).">Brand domain</div>
-						<input name="status_brand_domain" type="text" class="textfield" value="{{.Settings.StatusBrandDomain}}">
+						<div class="label" title="The hostname shown in the UI and used for copy/paste Stratum URLs (usually your public domain).">Brand domain {{template "sensitive" .}}</div>
+						<input name="status_brand_domain" type="text" class="textfield" value="{{.Settings.StatusBrandDomain}}" disabled>
 					</div>
 					<div>
 						<div class="label" title="Short one-line description shown on the overview page.">Tagline</div>
 						<input name="status_tagline" type="text" class="textfield" value="{{.Settings.StatusTagline}}">
+					</div>
+					<div>
+						<div class="label" title="Extra headline shown in the Connect Miner panel (optional).">Connect miner title extra</div>
+						<input name="status_connect_miner_title_extra" type="text" class="textfield" value="{{.Settings.StatusConnectMinerTitleExtra}}">
+					</div>
+					<div>
+						<div class="label" title="Optional link associated with the connect miner headline.">Connect miner title URL</div>
+						<input name="status_connect_miner_title_extra_url" type="text" class="textfield" value="{{.Settings.StatusConnectMinerTitleExtraURL}}">
 					</div>
 					<div>
 						<div class="label" title="Fiat currency code used for price conversions (e.g. usd, eur).">Fiat currency</div>
@@ -92,32 +102,68 @@
 						<input name="discord_url" type="text" class="textfield" value="{{.Settings.DiscordURL}}">
 					</div>
 					<div>
-						<div class="label" title="Shown on the status UI (optional).">Server location</div>
-						<input name="server_location" type="text" class="textfield" value="{{.Settings.ServerLocation}}">
+						<div class="label" title="Explorer base URL used to build address links (defaults to mempool.space).">Mempool address URL</div>
+						<input name="mempool_address_url" type="text" class="textfield" value="{{.Settings.MempoolAddressURL}}">
 					</div>
 					<div>
-						<div class="label" title="Canonical public URL used for redirects and cookies (include https:// and host). Leave blank to auto-detect.">status_public_url</div>
-						<input name="status_public_url" type="text" class="textfield" value="{{.Settings.StatusPublicURL}}">
+						<div class="label" title="Optional donation address shown in the footer.">Pool donation address</div>
+						<input name="pool_donation_address" type="text" class="textfield" value="{{.Settings.PoolDonationAddress}}">
+					</div>
+					<div>
+						<div class="label" title="Pool payout address used for coinbase outputs.">payout_address {{template "sensitive" .}}</div>
+						<input name="payout_address" type="text" class="textfield" value="{{.Settings.PayoutAddress}}" disabled>
+					</div>
+					<div>
+						<div class="label" title="Pool fee percent used when constructing coinbase payouts.">pool_fee_percent {{template "sensitive" .}}</div>
+						<input name="pool_fee_percent" type="text" class="textfield" value="{{printf "%.4f" .Settings.PoolFeePercent}}" disabled>
+					</div>
+					<div>
+						<div class="label" title="Operator donation percent used when enabled.">operator_donation_percent {{template "sensitive" .}}</div>
+						<input name="operator_donation_percent" type="text" class="textfield" value="{{printf "%.4f" .Settings.OperatorDonationPercent}}" disabled>
+					</div>
+					<div>
+						<div class="label" title="Pool entropy tag (used in coinbase).">pool_entropy {{template "sensitive" .}}</div>
+						<input name="pool_entropy" type="text" class="textfield" value="{{.Settings.PoolEntropy}}" disabled>
+					</div>
+					<div>
+						<div class="label" title="Pool tag prefix for coinbase data.">pool_tag_prefix {{template "sensitive" .}}</div>
+						<input name="pool_tag_prefix" type="text" class="textfield" value="{{.Settings.PoolTagPrefix}}" disabled>
+					</div>
+					<div>
+						<div class="label" title="Donation name shown on the status page when operator donation is enabled.">Operator donation name {{template "sensitive" .}}</div>
+						<input name="operator_donation_name" type="text" class="textfield" value="{{.Settings.OperatorDonationName}}" disabled>
+					</div>
+					<div>
+						<div class="label" title="Donation link shown on the status page when operator donation is enabled.">Operator donation URL {{template "sensitive" .}}</div>
+						<input name="operator_donation_url" type="text" class="textfield" value="{{.Settings.OperatorDonationURL}}" disabled>
+					</div>
+					<div>
+						<div class="label" title="Shown on the status UI (optional).">Server location {{template "sensitive" .}}</div>
+						<input name="server_location" type="text" class="textfield" value="{{.Settings.ServerLocation}}" disabled>
+					</div>
+					<div>
+						<div class="label" title="Canonical public URL used for redirects and cookies (include https:// and host). Leave blank to auto-detect.">status_public_url {{template "sensitive" .}}</div>
+						<input name="status_public_url" type="text" class="textfield" value="{{.Settings.StatusPublicURL}}" disabled>
 					</div>
 				</div>
 
 				<h3 style="margin:18px 0 8px 0;">Listeners</h3>
 				<div class="grid admin-grid">
 					<div>
-						<div class="label" title="Stratum TCP listener for miners (requires restart to change).">pool_listen {{template "restart-required" .}}</div>
-						<input name="pool_listen" type="text" class="textfield" value="{{.Settings.ListenAddr}}">
+						<div class="label" title="Stratum TCP listener for miners (requires restart to change).">pool_listen {{template "restart-required" .}} {{template "sensitive" .}}</div>
+						<input name="pool_listen" type="text" class="textfield" value="{{.Settings.ListenAddr}}" disabled>
 					</div>
 					<div>
-						<div class="label" title="Status UI HTTP listener. When TLS is enabled, HTTP redirects to HTTPS (requires restart to change).">status_listen (http) {{template "restart-required" .}}</div>
-						<input name="status_listen" type="text" class="textfield" value="{{.Settings.StatusAddr}}">
+						<div class="label" title="Status UI HTTP listener. When TLS is enabled, HTTP redirects to HTTPS (requires restart to change).">status_listen (http) {{template "restart-required" .}} {{template "sensitive" .}}</div>
+						<input name="status_listen" type="text" class="textfield" value="{{.Settings.StatusAddr}}" disabled>
 					</div>
 					<div>
-						<div class="label" title="Status UI HTTPS listener (requires restart to change).">status_tls_listen (https) {{template "restart-required" .}}</div>
-						<input name="status_tls_listen" type="text" class="textfield" value="{{.Settings.StatusTLSAddr}}">
+						<div class="label" title="Status UI HTTPS listener (requires restart to change).">status_tls_listen (https) {{template "restart-required" .}} {{template "sensitive" .}}</div>
+						<input name="status_tls_listen" type="text" class="textfield" value="{{.Settings.StatusTLSAddr}}" disabled>
 					</div>
 					<div>
-						<div class="label" title="Optional Stratum TLS listener for miners that support TLS (requires restart to change).">stratum_tls_listen {{template "restart-required" .}}</div>
-						<input name="stratum_tls_listen" type="text" class="textfield" value="{{.Settings.StratumTLSListen}}">
+						<div class="label" title="Optional Stratum TLS listener for miners that support TLS (requires restart to change).">stratum_tls_listen {{template "restart-required" .}} {{template "sensitive" .}}</div>
+						<input name="stratum_tls_listen" type="text" class="textfield" value="{{.Settings.StratumTLSListen}}" disabled>
 					</div>
 				</div>
 
@@ -125,7 +171,7 @@
 				<div class="grid admin-grid">
 					<div>
 						<div class="label" title="Maximum simultaneous Stratum connections allowed (checked on accept; requires restart to take effect).">max_conns {{template "restart-required" .}}</div>
-						<input name="max_conns" type="number" class="textfield" value="{{.Settings.MaxConns}}">
+						<input name="max_conns" type="number" min="1" max="1000000" class="textfield" value="{{.Settings.MaxConns}}">
 					</div>
 					<div>
 						<div class="label" title="When enabled, goPool auto-computes accept throttles from max_conns on startup (overrides explicit accept_* values; requires restart).">auto_accept_rate_limits {{template "restart-required" .}}</div>
@@ -136,11 +182,11 @@
 					</div>
 					<div>
 						<div class="label" title="Connection accept throttle (accepts/sec) for the initial restart/reconnect window (requires restart).">max_accepts_per_second {{template "restart-required" .}}</div>
-						<input name="max_accepts_per_second" type="number" class="textfield" value="{{.Settings.MaxAcceptsPerSecond}}">
+						<input name="max_accepts_per_second" type="number" min="10" max="10000" class="textfield" value="{{.Settings.MaxAcceptsPerSecond}}">
 					</div>
 					<div>
 						<div class="label" title="Burst size for accept limiter (token bucket). Allows short spikes (requires restart).">max_accept_burst {{template "restart-required" .}}</div>
-						<input name="max_accept_burst" type="number" class="textfield" value="{{.Settings.MaxAcceptBurst}}">
+						<input name="max_accept_burst" type="number" min="20" max="25000" class="textfield" value="{{.Settings.MaxAcceptBurst}}">
 					</div>
 					<div>
 						<div class="label" title="Target seconds for all miners to reconnect after a restart (used for auto_accept_rate_limits).">accept_reconnect_window {{template "restart-required" .}}</div>
@@ -245,7 +291,7 @@
 				<div class="grid admin-grid">
 					<div>
 						<div class="label" title="Miner connection idle timeout (seconds; requires restart).">connection_timeout_seconds {{template "restart-required" .}}</div>
-						<input name="connection_timeout_seconds" type="number" class="textfield" value="{{.Settings.ConnectionTimeoutSeconds}}">
+						<input name="connection_timeout_seconds" type="number" min="30" max="86400" class="textfield" value="{{.Settings.ConnectionTimeoutSeconds}}">
 					</div>
 					<div>
 						<div class="label" title="Logging verbosity for goPool (debug, info, warn, error; requires restart).">log_level {{template "restart-required" .}}</div>
@@ -271,6 +317,26 @@
 							<input type="checkbox" name="check_duplicate_shares" value="1" {{if .Settings.CheckDuplicateShares}}checked{{end}}>
 							<span style="margin-left:8px;">Enabled</span>
 						</label>
+					</div>
+				</div>
+
+				<h3 style="margin:18px 0 8px 0;">Tuning</h3>
+				<div class="grid admin-grid">
+					<div>
+						<div class="label" title="Minimum seconds online/offline before Discord worker notifications are sent (requires restart).">discord_worker_notify_threshold_seconds {{template "restart-required" .}}</div>
+						<input name="discord_worker_notify_threshold_seconds" type="number" min="0" max="86400" class="textfield" value="{{.Settings.DiscordWorkerNotifyThresholdSeconds}}">
+					</div>
+					<div>
+						<div class="label" title="EMA time constant for hashrate smoothing (seconds; requires restart).">hashrate_ema_tau_seconds {{template "restart-required" .}}</div>
+						<input name="hashrate_ema_tau_seconds" type="number" min="1" step="1" class="textfield" value="{{printf "%.0f" .Settings.HashrateEMATauSeconds}}">
+					</div>
+					<div>
+						<div class="label" title="Minimum shares before hashrate EMA kicks in (requires restart).">hashrate_ema_min_shares {{template "restart-required" .}}</div>
+						<input name="hashrate_ema_min_shares" type="number" min="10" class="textfield" value="{{.Settings.HashrateEMAMinShares}}">
+					</div>
+					<div>
+						<div class="label" title="Maximum seconds a miner can roll nTime forward (requires restart).">ntime_forward_slack_seconds {{template "restart-required" .}}</div>
+						<input name="ntime_forward_slack_seconds" type="number" min="1" class="textfield" value="{{.Settings.NTimeForwardSlackSeconds}}">
 					</div>
 				</div>
 

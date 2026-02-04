@@ -115,7 +115,7 @@ The `data/config/tuning.toml` file overrides fine-grained limits without touchin
 - `[rate_limits]`: `max_conns`, burst windows, steady-state rates, and whether to auto-calculate throttles from `max_conns`.
 - `[timeouts]`: `connection_timeout_seconds`.
 - `[difficulty]`: `max_difficulty`, `min_difficulty`, and whether to lock miner-suggested difficulty.
-- `[mining]`: `disable_pool_job_entropy` to remove the `<pool_entropy>-<job_entropy>` suffix.
+- `[mining]`: `disable_pool_job_entropy` to remove the `<pool_entropy>-<job_entropy>` suffix, and `vardiff_fine` to enable half-step VarDiff adjustments without power-of-two snapping.
 - `[hashrate]`: `hashrate_ema_tau_seconds`, `hashrate_ema_min_shares`, `ntime_forward_slack_seconds`.
 - `[discord]`: Worker notification thresholds for Discord alerts.
 - `[status]`: `mempool_address_url` controls the external explorer link prefix used by the worker status UI.
@@ -199,6 +199,8 @@ goPool also auto-creates `/app/`, `/stats/`, and `/api/*` handlers plus optional
 ## Admin Control Panel
 
 `data/config/admin.toml` is created automatically the first time goPool runs. The generated file documents the panel, defaults to `enabled = false`, and ships with `username = "admin"` plus a random password (check the file to copy the generated secret). Update the file to enable the UI, pick a unique username/password, and keep it out of version control. The `session_expiration_seconds` value controls how long the admin session remains valid (default 900 seconds).
+
+goPool now stores a `password_sha256` alongside the plaintext password. On startup, if `password` is set, goPool verifies/refreshes `password_sha256` to match it. After the first successful admin login, the plaintext `password` is cleared from `admin.toml` and only the hash remains; subsequent logins use the hash.
 
 When enabled, visit `/admin` (deliberately absent from the main navigation) and log in with the credentials stored in `admin.toml`. The panel exposes:
 
