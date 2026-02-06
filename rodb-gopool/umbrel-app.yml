@@ -5,14 +5,15 @@ tagline: Solo Bitcoin Mining Pool written in goLang
 icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
 category: Bitcoin
 port: 23080
-version: v0.7.1-RodB5
+version: v0.7.1-RodB6
 description: >-
   goPool
   A solo mining pool running open-source software with split-coinbase payouts and transparent operations. This is true solo mining: if your miner finds a block, you get the block reward. We don't split rewards among miners--the miner who finds it gets paid.
   Reality check - Solo mining is probabilistic. Small miners can go months or years without finding a block. We don't know when--or if--you'll find one.
 releaseNotes: |-
   Releases:
-    v0.1.7-RodB4 Released - 2026-02-05 (@Distortions81 code changes to date - 2026-02-05T21:30PST)
+    v0.1.7-RodB6 Released - 2026-02-06 (@Distortions81 code changes to date - 2026-02-06T08:03PST)
+    v0.1.7-RodB5 Released - 2026-02-05 (@Distortions81 code changes to date - 2026-02-05T21:30PST)
     v0.1.7-RodB4 Released - 2026-02-03 (@Distortions81 code changes to date)
     v0.1.7-RodB3 Released - 2026-02-01 (@Distortions81 code changes to support allow for local mempool url)
     v0.7.1-RodB2 Released - 2026-01-30 (@Distortions81 code changes to support sha256 search over http)
