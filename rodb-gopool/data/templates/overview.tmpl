@@ -71,6 +71,19 @@
 						</div>
 					</div>
 
+					{{if .StratumPasswordEnabled}}
+						{{if .StratumPasswordPublic}}
+						<div class="connect-step">
+							<div class="connect-step-head">
+								<div class="connect-step-number">3</div>
+								<div class="connect-step-label">Password</div>
+							</div>
+							<div class="connect-step-body">
+								<div class="connect-value mono">{{.StratumPassword}}</div>
+							</div>
+						</div>
+						{{end}}
+					{{else}}
 					<div class="connect-step">
 						<div class="connect-step-head">
 							<div class="connect-step-number">3</div>
@@ -81,6 +94,7 @@
 							<p class="text-sm connect-hint">Most miners use <span class="mono">x</span> by default, but any password will work.</p>
 						</div>
 					</div>
+					{{end}}
 				</div>
 
 					{{if gt .MinDifficulty 0.0}}
@@ -309,6 +323,25 @@
 			return `${Math.floor(days / 365)}y ago`;
 		}
 
+		function formatTimeUntil(value) {
+			if (!value) return '—';
+			const date = new Date(value);
+			if (Number.isNaN(date.getTime())) return '—';
+			const diffSec = Math.floor((date.getTime() - Date.now()) / 1000);
+			if (Math.abs(diffSec) < 5) return 'just now';
+			if (diffSec < 0) {
+				return formatTimeAgo(value);
+			}
+			if (diffSec < 60) return `in ${diffSec}s`;
+			if (diffSec < 3600) return `in ${Math.floor(diffSec / 60)}m`;
+			if (diffSec < 86400) return `in ${Math.floor(diffSec / 3600)}h`;
+			const days = Math.floor(diffSec / 86400);
+			if (days < 7) return `in ${days}d`;
+			if (days < 30) return `in ${Math.floor(days / 7)}w`;
+			if (days < 365) return `in ${Math.floor(days / 30)}mo`;
+			return `in ${Math.floor(days / 365)}y`;
+		}
+
 		function formatTimeAgoShort(value) {
 			if (!value) return '—';
 			const date = new Date(value);
@@ -483,7 +516,7 @@
 			}
 			const rows = bannedWorkers.map(worker => {
 				const name = worker.display_name || worker.name || '—';
-				const banStatus = `<span class="badge">Banned</span><br><span class="label">Until</span> ${formatTimeAgo(worker.banned_until)}${worker.ban_reason ? `<br><span class="label">Reason</span> ${worker.ban_reason}` : ''}`;
+				const banStatus = `<span class="badge">Banned</span><br><span class="label">Until</span> ${formatTimeUntil(worker.banned_until)}${worker.ban_reason ? `<br><span class="label">Reason</span> ${worker.ban_reason}` : ''}`;
 				return `
 					<tr>
 						<td class="mono">${name}</td>
