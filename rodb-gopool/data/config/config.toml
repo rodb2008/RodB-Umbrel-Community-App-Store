@@ -1,11 +1,16 @@
-# Generated base config example (copy to a real config and edit as needed)
-
+# goPool config.toml
+# This file is read on startup.
+# goPool may rewrite it (keeping a .bak) when it needs to persist settings.
+#
 # Key notes
 # - [server].pool_listen: Stratum TCP listener for miners (requires restart).
 # - [server].status_listen: HTTP listener for status UI (requires restart).
 # - [server].status_tls_listen: HTTPS listener; "" disables TLS (requires restart).
 # - [server].status_public_url: Canonical public URL for redirects/cookies; empty = auto-detect.
 # - [stratum].stratum_tls_listen: Optional Stratum-over-TLS listener (requires restart).
+# - [stratum].stratum_password_enabled: Require miners to send a password on authorize (requires restart).
+# - [stratum].stratum_password: Password string checked against mining.authorize params (requires restart).
+# - [stratum].stratum_password_public: Show the stratum password on the public connect panel (requires restart).
 #
 # Mining behavior
 # - [mining].solo_mode: Lighter submit validation for solo pools (skips worker-mismatch + some policy checks; requires restart).
@@ -30,6 +35,7 @@
 [backblaze_backup]
   bucket = ""
   enabled = false
+  force_every_interval = false
   interval_seconds = 43200
   keep_local_copy = true
   prefix = ""
@@ -62,6 +68,7 @@
   operator_donation_name = "M45core-goPool"
   operator_donation_percent = 10.0
   operator_donation_url = "http://m45core.com"
+  pool_entropy = "iq9e"
   pool_fee_percent = 2.0
   pooltag_prefix = "rodb"
   solo_mode = true
@@ -69,11 +76,11 @@
 
 [node]
   allow_public_rpc = false
-  data_dir = "data"
   payout_address = "bc1qm4ltluu6pc6f26pu995t7tdeazurz4rq7dsnxp"
   rpc_cookie_path = "/home/umbrel/.cookie"
   rpc_url = "http://172.17.0.1:8332"
-  zmq_block_addr = "tcp://172.17.0.1:28332"
+  zmq_hashblock_addr = "tcp://172.17.0.1:28332"
+  zmq_rawblock_addr = "tcp://172.17.0.1:28332"
 
 [server]
   pool_listen = ":23456"
@@ -82,4 +89,7 @@
   status_tls_listen = ""
 
 [stratum]
+  stratum_password = ""
+  stratum_password_enabled = false
+  stratum_password_public = false
   stratum_tls_listen = ":24333"
