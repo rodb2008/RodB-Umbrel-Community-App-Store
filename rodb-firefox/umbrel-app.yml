@@ -14,6 +14,8 @@ description: >-
     The graphical user interface (GUI) of the application can be accessed through a modern web browser,
     requiring no installation or configuration on the client side, or via any VNC client.
     
+    NOTE:  This version is currently only supported on UmbrelOS X86-64 hardware.  It will, currently, not work on ARM64 Hardware!
+    
 
 developer: jlesage/docker-firefox
 website: https://github.com/jlesage/docker-firefox

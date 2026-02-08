@@ -31,6 +31,7 @@ description: >-
     2025	Windows Server 2025	    6.7 GB
     2022	Windows Server 2022	    6.0 GB
     
+    NOTE:  This version is currently only supported on UmbrelOS X86-64 hardware.  It will, currently, not work on ARM64 Hardware!
 
 developer: Microsoft
 website: https://github.com/dockur/windows

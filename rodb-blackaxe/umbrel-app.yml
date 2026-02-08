@@ -8,6 +8,9 @@ port: 30211
 tagline: BlackAxe Dashboard to control your Bitcoin Miners
 version: 0.12.0
 description: A high-performance mining manager for Bitcoin and altcoins.
+
+        NOTE:  This version is currently only supported on UmbrelOS X86-64 hardware.  It will, currently, not work on ARM64 Hardware!
+
 releaseNotes: >-
   ### Supported Devices - Bitaxe (Ultra, Supra, Gamma, Hex) - NerdQAxe++ -
   Avalon (Nano, Mini, Q, and larger models) - Antminer - Whatsminer - Other

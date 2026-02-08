@@ -30,6 +30,8 @@ description: >-
         - On the Apple ID screen, select Set Up Later (bottom left) and then proceed using Skip.
 
         - On the Create a Computer Account screen, fill in a username and password and Continue.
+        
+    NOTE:  This version is currently only supported on UmbrelOS X86-64 hardware.  It will, currently, not work on ARM64 Hardware!
 
     
 
