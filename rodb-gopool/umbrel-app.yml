@@ -10,7 +10,7 @@ description: >-
   goPool
   A solo mining pool running open-source software with split-coinbase payouts and transparent operations. This is true solo mining: if your miner finds a block, you get the block reward. We don't split rewards among miners--the miner who finds it gets paid.
   Reality check - Solo mining is probabilistic. Small miners can go months or years without finding a block. We don't know when--or if--you'll find one.
-  
+  .
   NOTE:  This version is currently only supported on UmbrelOS X86-64 hardware.  It will, currently, not work on ARM64 Hardware!
 releaseNotes: |-
   Releases:
