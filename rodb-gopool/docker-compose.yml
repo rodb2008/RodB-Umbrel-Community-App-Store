@@ -36,7 +36,7 @@ services:
     networks:
       - umbrel_main_network
   rodb-gopool-widget:
-    image: rodb2008com/gopool-api-etl:v1
+    image: rodb2008com/gopool-api-etl:latest
     restart: unless-stopped
     container_name: rodb-gopool-widget_1
     networks:

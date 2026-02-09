@@ -1,6 +1,6 @@
 services:
   widget-server:
-    image: rodb2008com/gopool-api-etl:v1
+    image: rodb2008com/gopool-api-etl:v2
     restart: unless-stopped
     container_name: rodb-gopool-widget_1
     networks:

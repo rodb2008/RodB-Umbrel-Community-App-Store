@@ -8,14 +8,15 @@ category: Development
 port: 23000
 app_proxy:
   port: 23000
-version: v0.1
+version: v0.2
 description: "Mining stats from your local goPool
               .
-              NOTE:  This version is currently only supported on UmbrelOS X86-64 hardware.  It will, currently, not work on ARM64 Hardware!
+              NOTE:  Docker Container is now built with Multiplatform Support: X86-64 and ARM64
              "
 releaseNotes: |-
   Initial Release
 
+    Updated  - 2026-02-08 (Docker Containers are now built with Multiplatform Support: X86-64 and ARM64)
     Released - 2026-01-26
 
 developer: RodB
