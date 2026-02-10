@@ -37,8 +37,14 @@ services:
       - umbrel_main_network
   rodb-gopool-widget:
     image: rodb2008com/gopool-api-etl:latest
+    entrypoint: /bin/sh -c "sleep 20 && exec gunicorn --bind 0.0.0.0:23000 app:app"
     restart: unless-stopped
     container_name: rodb-gopool-widget_1
+    ports:
+      - '23001:23000'
+    extra_hosts:
+      - clerk.clerk.dev:127.0.0.1
+      - host.docker.internal:host-gateway
     networks:
       - umbrel_main_network
 networks:
