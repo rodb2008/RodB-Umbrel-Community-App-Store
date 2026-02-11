@@ -5,7 +5,7 @@ tagline: Solo Bitcoin Mining Pool written in goLang
 icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
 category: Bitcoin
 port: 23080
-version: v0.2.0-RodB0
+version: v0.2.0-RodB1
 description: >-
   goPool
   A solo mining pool running open-source software with split-coinbase payouts and transparent operations. This is true solo mining: if your miner finds a block, you get the block reward. We don't split rewards among miners--the miner who finds it gets paid.
@@ -14,6 +14,7 @@ description: >-
   NOTE:  Docker Containers are now built with Multiplatform Support: X86-64 and ARM64
 releaseNotes: |-
   Releases:
+    v0.2.0-RodB1 Released - 2026-02-11 (auto adjust share spam grace with vardiff window: X86-64 and ARM64 - 2026-02-11T12:20PST)
     v0.2.0-RodB0 Released - 2026-02-10 (Updated goPool to v0.2.0 - with fix for clark.com: X86-64 and ARM64 - 2026-02-10T18:40PST)
     v0.1.9-RodB3 Released - 2026-02-10 (Updated goPool Widget ETL to support both: X86-64 and ARM64 - 2026-02-10T10:50PST)
     v0.1.9-RodB2 Released - 2026-02-09 (big EMA (hashrate) and vardiff adjustments: X86-64 and ARM64 - 2026-02-09T20:20PST)
