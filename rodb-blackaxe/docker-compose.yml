@@ -1,6 +1,6 @@
 services:
   rodb-blackaxe:
-    image: rodb2008com/rodb-blackaxe:latest
+    image: rodb2008com/rodb-blackaxe:dev
     ports:
       - "30211:30211"
     volumes:
