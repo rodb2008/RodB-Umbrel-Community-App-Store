@@ -3,7 +3,7 @@ id: rodb-blackaxe
 name: BlackAxe Dashboard
 icon: >-
   https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-blackaxe/logo.png
-category: Mining
+category: Bitcoin
 port: 30211
 tagline: BlackAxe Dashboard to control your Bitcoin Miners
 version: 0.12.1.BETA
