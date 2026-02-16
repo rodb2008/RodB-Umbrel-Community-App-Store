@@ -14,7 +14,7 @@ description: >-
   NOTE:  Docker Containers are now built with Multiplatform Support: X86-64 and ARM64
 releaseNotes: |-
   Releases:
-    v0.2.3-RodB0 Released - 2026-02-16 (Updated to goPool v0.2.3: X86-64 and ARM64 - 2026-02-16T11:30PST)
+    v0.2.3-RodB0 Released - 2026-02-16 (Updated to goPool v0.2.3: Updated WebUI Widget to ETL v4: X86-64 and ARM64 - 2026-02-16T11:30PST)
     v0.2.2-RodB0 Released - 2026-02-15 (Updated to goPool v0.2.2: Updated Umbrel Web Widget to v3: X86-64 and ARM64 - 2026-02-15T19:40PST)
     v0.2.0-RodB1 Released - 2026-02-11 (auto adjust share spam grace with vardiff window: X86-64 and ARM64 - 2026-02-11T12:20PST)
     v0.2.0-RodB0 Released - 2026-02-10 (Updated goPool to v0.2.0 - with fix for clark.com: X86-64 and ARM64 - 2026-02-10T18:40PST)
@@ -46,7 +46,7 @@ widgets:
     type: "four-stats"
     name: "goPool Stats"
     # Communicates internally with your Flask container
-    endpoint: "rodb-gopool-widget:23000/widgets/stats"
+    endpoint: "rodb-gopool-widget:23000/widget/stats"
     refresh: 10s
     items:
       - label: "Hashrate"
