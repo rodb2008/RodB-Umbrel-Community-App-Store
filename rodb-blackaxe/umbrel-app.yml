@@ -6,7 +6,7 @@ icon: >-
 category: Bitcoin
 port: 30211
 tagline: BlackAxe Dashboard to control your Bitcoin Miners
-version: 0.12.1.BETA
+version: 0.12.1.BETA2
 description: >-
   A high-performance mining manager for Bitcoin and altcoins.
   .
@@ -24,6 +24,7 @@ releaseNotes: >-
   
   ## Updated for Multiplatform Support - x86-64 and ARM64
 
+  BETA2    - 2026-02-17
   BETA     - 2026-02-15
   Updated  - 2026-02-08
   Released - 2026-01-27

@@ -1,10 +1,21 @@
 services:
   rodb-blackaxe:
-    image: rodb2008com/rodb-blackaxe:dev
+    image: rodb2008com/rodb-blackaxe:dev2
     ports:
       - "30211:30211"
     volumes:
       - ./data:/app/data # Persist your SQLite DB here
+    environment:
+      - NODE_ENV=production
+      - PORT=30211
+      - HOST=0.0.0.0
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:30211/api/health", "||", "exit", "1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
     restart: unless-stopped
     container_name: rodb-blackaxe_1
 
