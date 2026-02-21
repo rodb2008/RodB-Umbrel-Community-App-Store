@@ -6,11 +6,11 @@ icon: >-
 category: Bitcoin
 port: 30211
 tagline: BlackAxe Dashboard to control your Bitcoin Miners
-version: 0.12.1.BETA2
+version: 0.12.1.BETA3
 description: >-
   A high-performance mining manager for Bitcoin and altcoins.
   .
-  NOTE:  This version is currently only supported on UmbrelOS X86-64 hardware.  It will, currently, not work on ARM64 Hardware!
+  NOTE:  This version is now supports UmbrelOS on x86-64 and ARM64 Hardware.  Although, I have no way to test on ARM64 Hardware!
 
 releaseNotes: >-
   ### Supported Devices - Bitaxe (Ultra, Supra, Gamma, Hex) - NerdQAxe++ -
@@ -24,6 +24,7 @@ releaseNotes: >-
   
   ## Updated for Multiplatform Support - x86-64 and ARM64
 
+  BETA3    - 2026-02-21 - Added netcat to build to support Avalon Hardware and support for x86-64 and ARM64 Hardware
   BETA2    - 2026-02-17
   BETA     - 2026-02-15
   Updated  - 2026-02-08
