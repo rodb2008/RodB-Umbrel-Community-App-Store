@@ -6,7 +6,7 @@ icon: >-
 category: Bitcoin
 port: 30211
 tagline: BlackAxe Dashboard to control your Bitcoin Miners
-version: 1.2.2.RodB0
+version: 1.2.2.RodB1
 description: >-
   A high-performance mining manager for Bitcoin and altcoins.
   .
@@ -26,7 +26,7 @@ releaseNotes: >-
   
   https://github.com/BlackHole-Axe/BlackAxe/releases/tag/BlackAxev1.2.2
 
-  v1.2.2.RodB0   - 2026-02-21 - CGMiner / Avalon TCP Communication — Critical Fix - Updated Version Numbering
+  v1.2.2.RodB1   - 2026-02-21 - CGMiner / Avalon TCP Communication — Critical Fix - Updated Version Numbering
                  - Added netcat to build to support Avalon Hardware and support for x86-64 and ARM64 Hardware
   BETA4    - 2026-02-17
   BETA3    - 2026-02-15

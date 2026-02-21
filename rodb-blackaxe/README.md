@@ -1,4 +1,4 @@
-# BlackAxe v1.2.2.RodB0 — Mining Device Manager for UmbrelOS
+# BlackAxe v1.2.2 — Mining Device Manager for UmbrelOS
 
 Professional web-based management dashboard for Bitcoin solo miners.
 
