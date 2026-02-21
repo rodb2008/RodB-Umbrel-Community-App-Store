@@ -6,15 +6,15 @@ icon: >-
 category: Bitcoin
 port: 30211
 tagline: BlackAxe Dashboard to control your Bitcoin Miners
-version: 0.12.1.BETA4
+version: 1.2.2.RodB0
 description: >-
   A high-performance mining manager for Bitcoin and altcoins.
   .
   NOTE:  This version is now supports UmbrelOS on x86-64 and ARM64 Hardware.  Although, I have no way to test on ARM64 Hardware!
 
 releaseNotes: >-
-  ### Supported Devices - Bitaxe (Ultra, Supra, Gamma, Hex) - NerdQAxe++ -
-  Avalon (Nano, Mini, Q, and larger models) - Antminer - Whatsminer - Other
+  ### Supported Devices - Bitaxe (Ultra, Supra, Gamma, Hex) - Bitforge Nano - NerdQAxe++ -
+  Avalon (Nano/3s, Mini, Q, and larger models) - Antminer - Whatsminer - Other
   CGMiner-compatible devices 
 
   ## Features - Real-time monitoring of all mining devices - Automatic device
@@ -23,12 +23,15 @@ releaseNotes: >-
   for offline miners - 24-hour history charts
   
   ## Updated for Multiplatform Support - x86-64 and ARM64
+  
+  https://github.com/BlackHole-Axe/BlackAxe/releases/tag/BlackAxev1.2.2
 
-  BETA4    - 2026-02-21 - Added netcat to build to support Avalon Hardware and support for x86-64 and ARM64 Hardware
-  BETA2    - 2026-02-17
-  BETA     - 2026-02-15
-  Updated  - 2026-02-08
-  Released - 2026-01-27
+  v1.2.2.RodB0   - 2026-02-21 - CGMiner / Avalon TCP Communication — Critical Fix - Updated Version Numbering
+                 - Added netcat to build to support Avalon Hardware and support for x86-64 and ARM64 Hardware
+  BETA4    - 2026-02-17
+  BETA3    - 2026-02-15
+  BETA2    - 2026-02-08
+  BETA1    - 2026-01-27
 developer: BlackHole
 website: 'https://github.com'
 repo: 'https://github.com/rodb2008/RodB-Umbrel-Community-App-Store'
