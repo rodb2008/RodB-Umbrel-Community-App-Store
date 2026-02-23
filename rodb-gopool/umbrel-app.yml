@@ -14,7 +14,7 @@ description: >-
   NOTE:  Docker Containers are now built with Multiplatform Support: X86-64 and ARM64
 releaseNotes: |-
   Releases:
-    v0.2.5-RodB1 Released - 2026-02-23 (Updated to goPool v0.2.5: Stratum and config updates: X86-64 and ARM64 - 2026-02-23T09:20PST)
+    v0.2.5-RodB1 Released - 2026-02-23 (Updated to goPool v0.2.5: Stratum and config updates: X86-64 and ARM64 - 2026-02-23T09:30PST)
     v0.2.4-RodB3 Released - 2026-02-20 (Updated to goPool v0.2.4: Add default-on ckpool emulate mode: X86-64 and ARM64 - 2026-02-20T08:40PST)
     v0.2.4-RodB2 Released - 2026-02-19 (Updated to goPool v0.2.4: Speeds up jobs and worker hashrate: X86-64 and ARM64 - 2026-02-19T23:00PST)
     v0.2.3-RodB0 Released - 2026-02-16 (Updated to goPool v0.2.3: Updated WebUI Widget to ETL v4: X86-64 and ARM64 - 2026-02-16T11:30PST)
