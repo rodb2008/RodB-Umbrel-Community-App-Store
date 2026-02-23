@@ -108,7 +108,10 @@ The required `data/config/config.toml` is the primary interface for pool behavio
 
 - `[server]`: `pool_listen`, `status_listen`, `status_tls_listen`, and `status_public_url`. Set `status_tls_listen = ""` to disable HTTPS and rely on `status_listen` only. Leaving `status_listen` empty disables HTTP entirely (e.g., TLS-only deployments). `status_public_url` feeds redirects and Clerk cookie domains. When both HTTP and HTTPS are enabled, the HTTP listener now issues a temporary (307) redirect to the HTTPS endpoint so the public UI and JSON APIs stay behind TLS.
 - `[branding]`: Styling and branding options shown in the status UI (tagline, pool donation link, location string).
-- `[stratum]`: `stratum_tls_listen` for TLS-enabled Stratum (leave blank to disable secure Stratum), plus `stratum_password_enabled`/`stratum_password` to require a shared password on `mining.authorize`, and `stratum_password_public` to show the password on the public connect panel. `ckpool_emulate` (default `true`) uses a CKPool-style subscribe response shape for compatibility. Performance/tuning: `fast_decode_enabled` (fast-path decoding), `fast_encode_enabled` (fast-path response encoding), and `tcp_read_buffer_bytes`/`tcp_write_buffer_bytes` (socket buffer sizes; 0 = OS default).
+- `[stratum]`: `stratum_tls_listen` for TLS-enabled Stratum (leave blank to disable secure Stratum), plus `stratum_password_enabled`/`stratum_password` to require a shared password on `mining.authorize`, and `stratum_password_public` to show the password on the public connect panel.
+- `policy.toml [stratum]`: `ckpool_emulate` controls CKPool-style subscribe response compatibility.
+- `tuning.toml [stratum]`: `fast_decode_enabled`, `fast_encode_enabled`, `tcp_read_buffer_bytes`, and `tcp_write_buffer_bytes` control Stratum fast-path and socket buffer tuning.
+- Optional runtime overrides (temporary): `-ckpool-emulate`, `-stratum-fast-decode`, `-stratum-fast-encode`, `-stratum-tcp-read-buffer`, and `-stratum-tcp-write-buffer`.
 - `[node]`: `rpc_url`, `rpc_cookie_path`, and ZMQ addresses (`zmq_hashblock_addr`/`zmq_rawblock_addr`).
 - `[mining]`: Pool fee, donation settings, and `pooltag_prefix`.
 - `[logging]`: `level` sets the default log verbosity (`debug`, `info`, `warn`, or `error`). It controls the structured log output and whether `net-debug.log` is enabled.
@@ -202,7 +205,7 @@ The status UI uses two listeners:
 
 Set `status_tls_listen = ""` to disable HTTPS and keep only the HTTP listener. Set `status_listen = ""` to disable HTTP entirely and rely solely on TLS. The CLI no longer provides an `-http-only` toggle.
 
-goPool also auto-creates `/app/`, `/stats/`, and `/api/*` handlers plus optional TLS/cert reloading. Run `systemctl kill -s SIGUSR1 <service>` to reload the templates (the previous template set is kept when parsing fails) and `SIGUSR2` to reload the configuration files without stopping the daemon.
+goPool also auto-creates `/stats/` and `/api/*` handlers plus optional TLS/cert reloading. Run `systemctl kill -s SIGUSR1 <service>` to reload the templates (the previous template set is kept when parsing fails) and `SIGUSR2` to reload the configuration files without stopping the daemon.
 
 ## Admin Control Panel
 
@@ -309,7 +312,9 @@ Each override value logs when set, so goPool operators can audit what changed vi
 ## Monitoring APIs
 
 - `/api/overview`, `/api/pool-page`, `/api/server`, etc., provide JSON snapshots consumed by the UI. Disable them with `-no-json`.
-- `/stats/` and `/app/` serve the saved-worker dashboards, including per-worker graphing data.
+- `/user/<wallet>` and `/stats/<wallet>` are standard wallet lookup routes.
+- `/users/<wallet_sha256>` is the privacy variant of wallet lookup (keeps raw wallet values out of links/bookmarks).
+- `/stats/` serves the saved-worker dashboards, including per-worker graphing data.
 - The status UI exposes worker-level metrics (hashrate, bans, accepted shares) and automatically lists Discord/Clerk states if configured.
 
 ## Profiling and debugging
