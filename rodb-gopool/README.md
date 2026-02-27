@@ -32,11 +32,11 @@ Stratum notes:
 
 ## Codebase size
 
-- **Go source:** 50,017 lines spread across the `.go` files (core logic, services, status handlers, etc.).
-- **HTML/template:** 8,323 lines (status/admin UI templates, static fragments, helpers).
-- **CSS:** 2,126 lines for the dashboard/admin skin and helpers.
+- **Go source (excluding tests):** 34,401 lines across 142 non-test `.go` files.
+- **Go tests:** 16,245 lines across 102 `*_test.go` files.
+- **Go source (total):** 50,646 lines across 244 `.go` files.
 
-Counts above were collected on February 23, 2026.
+Counts above were collected on February 24, 2026.
 
 ## Configuration overview
 
@@ -51,7 +51,6 @@ Counts above were collected on February 23, 2026.
 - `data/config/admin.toml` controls the optional admin UI at `/admin`. The file is auto-generated on first run with `enabled = false` and a random password (read the file to see the generated secret). Update it to enable the panel, pick fresh credentials, and keep the file private. goPool writes `password_sha256` on startup and clears the plaintext password after the first successful login; subsequent logins use the hash. The admin UI provides a field-based editor for the in-memory config, can force-write `config.toml` + split override files, and includes a reboot control; reboot requests require typing `REBOOT` and resubmitting the admin password.
 - `[logging].level` controls runtime verbosity (`debug`, `info`, `warn`, `error`) and gates features like `net-debug.log`; override it temporarily with `-log-level <level>`.
 - `share_*` validation toggles live in `data/config/policy.toml` `[mining]` (for example `share_check_duplicate`).
-- `[mining].reject_no_job_id` defaults to `false`; enable it if you want goPool to reject `mining.submit` requests that arrive with an empty `job_id` during basic validation. Leave it disabled for compatibility with miners that reuse connections across pools (requires restart).
 
 Flags like `-network`, `-rpc-url`, `-rpc-cookie`, and `-secrets` override the corresponding config file values for a single run—they are not written back to `config.toml`.
 
