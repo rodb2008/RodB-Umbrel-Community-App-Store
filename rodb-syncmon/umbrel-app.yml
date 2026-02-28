@@ -8,12 +8,13 @@ description: >
   A professional-grade monitoring dashboard for blockchain nodes. 
   Features real-time BPM, ETA for sync completion, and Discord alerts 
   for stalls or resource pressure.
+  Coin Supported:  BTC (default), BC2, BCH, DGB and BSV (From Retro Mike MiningCore Nodes)
 developer: "RodB"
 website: "https://github.com"
 submitter: "RodB"
 submissionDate: "2026-02-28"
 iconUri: "https://your-repo/icon.png"
-category: "BITCOIN"
+category: Bitcoin
 port: 8180
 gallery:
   - "https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-syncmon/1.png"
