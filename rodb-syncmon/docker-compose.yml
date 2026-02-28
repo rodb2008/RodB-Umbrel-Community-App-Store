@@ -1,0 +1,25 @@
+services:
+  syncmon-monitor:
+    build: .
+    image: rodb-syncmon-monitor:latest
+    container_name: rodb-syncmon-monitor
+    restart: unless-stopped
+    network_mode: "host"
+    privileged: true
+    pid: "host" 
+    environment:
+      - TTYD_PORT=8180
+    volumes:
+      # Mount the script and the config file into the same folder
+      - ./syncmon.sh:/usr/local/bin/syncmon.sh:ro
+      - ./${COIN_FILE}:/usr/local/bin/coin.config:ro
+      
+      # IMPORTANT: Mount the Umbrel data to the EXACT path defined in coin.config
+      # This allows 'du -sh' inside the container to find the files
+      - ${BITCOIN_DATA_PATH}:${BITCOIN_DATA_PATH}:ro
+      
+      # System access for Docker-in-Docker and Metrics
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /sys:/sys:ro
+      - /proc:/host/proc:ro
+

@@ -1,0 +1,21 @@
+manifestVersion: 1
+id: "rodb-syncmon"
+name: "Blockchain Sync Monitor"
+version: "3.01"
+icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-syncmon/syncmon.png
+tagline: "Real-time dashboard for tracking blockchain IBD and node health."
+description: >
+  A professional-grade monitoring dashboard for blockchain nodes. 
+  Features real-time BPM, ETA for sync completion, and Discord alerts 
+  for stalls or resource pressure.
+developer: "RodB"
+website: "https://github.com"
+submitter: "RodB"
+submissionDate: "2026-02-28"
+iconUri: "https://your-repo/icon.png"
+category: "BITCOIN"
+port: 8180
+gallery:
+  - "https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-syncmon/1.png"
+path: ""
+

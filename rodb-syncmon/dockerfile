@@ -1,0 +1,26 @@
+# The base image already supports multiple architectures (amd64, arm64)
+FROM tsl0922/ttyd:latest
+
+# Ensure we're using the correct frontend for non-interactive apt installs
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies and locales
+RUN apt-get update && apt-get install -y \
+    docker.io \
+    jq \
+    bc \
+    curl \
+    tmux \
+    procps \
+    locales \
+    && rm -rf /var/lib/apt/lists/*
+
+# Generate and set the locale to UTF-8 for emoji support
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8
+
+# Use a multi-platform friendly entrypoint
+ENTRYPOINT ["/bin/sh", "-c", "ttyd -p 8180 -c ${MONITOR_USER}:${MONITOR_PASS} bash /usr/local/bin/syncmon.sh"]
+
