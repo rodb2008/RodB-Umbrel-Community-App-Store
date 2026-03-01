@@ -6,9 +6,10 @@ services:
     network_mode: host
     privileged: true
     pid: host
+    env_file:
+      - .env
     environment:
       - TTYD_PORT=8180
-      - BITCOIN_DATA_PATH=${BITCOIN_DATA_PATH:-/home/umbrel/umbrel/app-data/bitcoin}
     volumes:
       - ./syncmon.sh:/usr/local/bin/syncmon.sh:ro
       - ./${COIN_FILE:-btc.coin.config}:/usr/local/bin/coin.config:ro
