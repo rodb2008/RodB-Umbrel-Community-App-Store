@@ -3,23 +3,17 @@ services:
     image: rodb2008com/rodb-syncmon-monitor:latest
     container_name: rodb-syncmon-monitor
     restart: unless-stopped
-    network_mode: "host"
+    network_mode: host
     privileged: true
-    pid: "host" 
+    pid: host
     environment:
       - TTYD_PORT=8180
-      - ${BITCOIN_DATA_PATH:-/home/umbrel/umbrel/app-data/bitcoin}
+      - BITCOIN_DATA_PATH=${BITCOIN_DATA_PATH:-/home/umbrel/umbrel/app-data/bitcoin}
     volumes:
-      # Mount the script and the config file into the same folder
       - ./syncmon.sh:/usr/local/bin/syncmon.sh:ro
       - ./${COIN_FILE:-btc.coin.config}:/usr/local/bin/coin.config:ro
-      
-      # IMPORTANT: Mount the Umbrel data to the EXACT path defined in coin.config
-      # This allows 'du -sh' inside the container to find the files
+      # Use the fallback here to prevent the "invalid spec ::ro" error
       - ${BITCOIN_DATA_PATH:-/home/umbrel/umbrel/app-data/bitcoin}:${BITCOIN_DATA_PATH:-/home/umbrel/umbrel/app-data/bitcoin}:ro
-      
-      # System access for Docker-in-Docker and Metrics
       - /var/run/docker.sock:/var/run/docker.sock
       - /sys:/sys:ro
       - /proc:/host/proc:ro
-
