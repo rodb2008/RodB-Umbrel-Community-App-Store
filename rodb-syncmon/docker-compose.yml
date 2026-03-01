@@ -7,12 +7,12 @@ services:
     privileged: true
     pid: host
     env_file:
-      - .env
+      - ${APP_DATA_DIR}/.env
     environment:
       - TTYD_PORT=8180
     volumes:
-      - ./syncmon.sh:/usr/local/bin/syncmon.sh:ro
-      - ./${COIN_FILE:-btc.coin.config}:/usr/local/bin/coin.config:ro
+      - ${APP_DATA_DIR}/syncmon.sh:/usr/local/bin/syncmon.sh:ro
+      - ${APP_DATA_DIR}/${COIN_FILE:-btc.coin.config}:/usr/local/bin/coin.config:ro
       # Use the fallback here to prevent the "invalid spec ::ro" error
       - ${BITCOIN_DATA_PATH:-/home/umbrel/umbrel/app-data/bitcoin}:${BITCOIN_DATA_PATH:-/home/umbrel/umbrel/app-data/bitcoin}:ro
       - /var/run/docker.sock:/var/run/docker.sock
