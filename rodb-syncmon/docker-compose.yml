@@ -1,7 +1,7 @@
 services:
   syncmon-monitor:
     build: .
-    image: rodb-syncmon-monitor:latest
+    image: rodb2008com/rodb-syncmon-monitor:latest
     container_name: rodb-syncmon-monitor
     restart: unless-stopped
     network_mode: "host"
