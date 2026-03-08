@@ -1,0 +1,200 @@
+{{/* Shared layout pieces: header toolbar and footer */}}
+
+{{define "header"}}
+<a class="skip-link" href="#content">Skip to content</a>
+<header>
+	<div class="header-inner">
+		<div class="brand">
+			<img src="/logo.png" alt="{{.BrandName}} logo" class="brand-logo">
+			<div>
+				{{if .BrandDomain}}
+				<div class="brand-title">{{.BrandDomain}}</div>
+				{{end}}
+				{{if .ServerLocation}}
+				<div class="brand-sub" style="font-weight: 600; color: var(--accent);">{{.ServerLocation}}</div>
+				{{end}}
+				{{if .ListenAddr}}
+				<div class="brand-sub">
+					stratum:{{addrPort .ListenAddr}}{{if .StratumTLSListen}} / tls:{{addrPort .StratumTLSListen}}{{end}}
+				</div>
+				{{end}}
+				{{if .Tagline}}
+				<div class="brand-sub">{{.Tagline}}</div>
+				{{end}}
+			</div>
+		</div>
+		<nav class="header-links">
+			<a class="header-link home-link" href="/"><span class="nav-icon" aria-hidden="true"><img src="/icons/dark/icon-overview.png" alt="" class="nav-icon-img themed-icon" data-icon="icon-overview.png"></span><span class="nav-text">Overview</span></a>
+			<div class="header-dropdown">
+				<button class="header-link more-info-toggle" id="moreInfoMenuButton" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="moreInfoMenu">
+					<span class="nav-icon" aria-hidden="true"><img src="/icons/dark/icon-menu.png" alt="" class="nav-icon-img themed-icon" data-icon="icon-menu.png"></span><span class="nav-text">Menu</span> ▼
+				</button>
+				<div class="header-dropdown-menu" id="moreInfoMenu" role="menu" aria-labelledby="moreInfoMenuButton">
+					<a class="header-dropdown-link" role="menuitem" href="/pool"><img src="/icons/dark/icon-pool-stats.png" alt="" class="menu-icon-img themed-icon" data-icon="icon-pool-stats.png">Pool Stats</a>
+					<a class="header-dropdown-link" role="menuitem" href="/node"><img src="/icons/dark/icon-node-info.png" alt="" class="menu-icon-img themed-icon" data-icon="icon-node-info.png">Bitcoin Node Info</a>
+					<a class="header-dropdown-link" role="menuitem" href="/server"><img src="/icons/dark/icon-server-stats.png" alt="" class="menu-icon-img themed-icon" data-icon="icon-server-stats.png">Server Stats</a>
+					<div class="header-dropdown-divider" role="separator" aria-hidden="true"></div>
+					<a class="header-dropdown-link" role="menuitem" href="/help"><img src="/icons/dark/icon-solo-mining-101.png" alt="" class="menu-icon-img themed-icon" data-icon="icon-solo-mining-101.png">Solo Mining 101</a>
+					<a class="header-dropdown-link" role="menuitem" href="/about"><img src="/icons/dark/icon-about.png" alt="" class="menu-icon-img themed-icon" data-icon="icon-about.png">About Us</a>
+					<div class="header-dropdown-divider" role="separator" aria-hidden="true"></div>
+					<a class="header-dropdown-link" role="menuitem" href="/admin"><img src="/icons/dark/icon-server-stats.png" alt="" class="menu-icon-img themed-icon" data-icon="icon-server-stats.png">Admin Panel</a>
+					<a class="header-dropdown-link" role="menuitem" href="https://m45core.com:8443/" target="_blank" rel="noopener noreferrer"><img src="/icons/dark/icon-poolcensus.png" alt="" class="menu-icon-img themed-icon" data-icon="icon-poolcensus.png">PoolCensus</a>
+					{{if or .GitHubURL .DiscordURL}}
+					<div class="header-dropdown-divider" role="separator" aria-hidden="true"></div>
+					{{end}}
+					{{if .GitHubURL}}
+					<a class="header-dropdown-link" role="menuitem" href="{{.GitHubURL}}" target="_blank" rel="noopener noreferrer"><img src="/icons/dark/icon-github.png" alt="" class="menu-icon-img themed-icon" data-icon="icon-github.png">GitHub</a>
+					{{end}}
+					{{if .DiscordURL}}
+					<a class="header-dropdown-link" role="menuitem" href="{{.DiscordURL}}" target="_blank" rel="noopener noreferrer"><img src="/icons/dark/icon-discord.png" alt="" class="menu-icon-img themed-icon" data-icon="icon-discord.png">Discord</a>
+					{{end}}
+				</div>
+			</div>
+			<a class="header-link worker-login-link" href="/worker"><span class="nav-icon" aria-hidden="true"><img src="/icons/light/icon-workers.png" alt="" class="nav-icon-img themed-icon" data-icon="icon-workers.png" data-icon-mode="light"></span><span class="nav-text">Workers</span></a>
+			<button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark mode" title="Toggle light/dark mode">
+				<span class="theme-toggle-icon"><img src="/icons/dark/icon-theme-dark.png" alt="" class="theme-toggle-img themed-icon" id="themeToggleIcon" data-icon-dark="icon-theme-dark.png" data-icon-light="icon-theme-light.png"></span>
+			</button>
+		</nav>
+	</div>
+</header>
+{{range .Warnings}}
+<div class="warning-banner">
+	<span class="warning-title">Warning</span>
+	<span class="warning-text">{{.}}</span>
+</div>
+{{end}}
+{{end}}
+
+{{define "footer"}}
+<p class="text-sm" style="margin-top:8px;color:#646b86;">
+	<span class="mono">{{.PoolSoftware}}</span>
+	&mdash; version: <span class="mono">{{.BuildVersion}}</span>
+	&mdash; build: <span class="mono">{{.BuildTime}}</span>
+</p>
+	<div class="text-sm" style="margin-top:4px;color:#646b86;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+		{{if .PoolDonationAddress}}
+		<div>
+			Donate to this pool:
+			<a href="bitcoin:{{.PoolDonationAddress}}" class="code-box copyable" title="Click to copy or open in wallet" data-copy="{{.PoolDonationAddress}}" style="text-decoration:none;color:inherit;">{{.PoolDonationAddress}}</a>
+		</div>
+		{{end}}
+	</div>
+<p class="text-sm" style="margin-top:8px;color:#646b86;text-align:center;">
+	By connecting mining device(s) or software to this pool, you acknowledge and agree to be bound by the <a href="/terms" style="color:inherit;text-decoration:underline;">Terms of Use</a> and acknowledge that you have reviewed the <a href="/privacy" style="color:inherit;text-decoration:underline;">Privacy Policy</a> (Last Updated: February 14, 2026).
+</p>
+<script>
+// Theme switcher - maintains theme preference across page loads
+(function() {
+	const themeToggle = document.getElementById('themeToggle');
+	const themeIcon = document.getElementById('themeToggleIcon');
+	const themedIcons = document.querySelectorAll('.themed-icon');
+
+	// Get saved theme or default to dark
+	const savedTheme = localStorage.getItem('theme') || 'dark';
+
+	// Apply theme on load
+	function applyTheme(theme) {
+		if (theme === 'light') {
+			document.documentElement.setAttribute('data-theme', 'light');
+		} else {
+			document.documentElement.removeAttribute('data-theme');
+		}
+		const mode = theme === 'light' ? 'light' : 'dark';
+		themedIcons.forEach(function(icon) {
+			const iconMode = icon.dataset.iconMode || mode;
+			if (icon.dataset.icon) {
+				icon.src = `/icons/${iconMode}/${icon.dataset.icon}`;
+				return;
+			}
+			if (icon.dataset.iconLight && icon.dataset.iconDark) {
+				icon.src = theme === 'light' ? `/icons/light/${icon.dataset.iconLight}` : `/icons/dark/${icon.dataset.iconDark}`;
+			}
+		});
+	}
+
+	// Initialize theme
+	applyTheme(savedTheme);
+
+	// Toggle theme on button click
+	if (themeToggle) {
+		themeToggle.addEventListener('click', function() {
+			const currentTheme = document.documentElement.getAttribute('data-theme');
+			const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+			applyTheme(newTheme);
+			localStorage.setItem('theme', newTheme);
+		});
+	}
+
+})();
+
+// Copy-to-clipboard functionality for code boxes
+document.addEventListener('click', function(e) {
+	const copyable = e.target.closest('.copyable');
+	if (!copyable) return;
+
+	const text = copyable.dataset.copy || copyable.textContent;
+	navigator.clipboard.writeText(text).then(function() {
+		const original = copyable.style.background;
+		copyable.style.background = 'var(--accent-soft)';
+		setTimeout(function() {
+			copyable.style.background = original;
+		}, 200);
+	}).catch(function(err) {
+		console.error('Failed to copy:', err);
+	});
+});
+(function() {
+	const root = document.documentElement;
+	const header = document.querySelector('header');
+	if (!header) return;
+
+	function updatePagePadding() {
+		const height = header.getBoundingClientRect().height;
+		const padding = Math.ceil(height + 16);
+		root.style.setProperty('--page-top-padding', `${padding}px`);
+	}
+
+	updatePagePadding();
+	window.addEventListener('resize', updatePagePadding);
+	if (window.ResizeObserver) {
+		new ResizeObserver(updatePagePadding).observe(header);
+	}
+})();
+
+// Header dropdown (touch + keyboard friendly)
+(function() {
+	const dropdown = document.querySelector('.header-dropdown');
+	if (!dropdown) return;
+	const button = document.getElementById('moreInfoMenuButton');
+	const menu = document.getElementById('moreInfoMenu');
+	if (!button || !menu) return;
+	const header = document.querySelector('header');
+
+	const isOpen = () => dropdown.dataset.open === 'true';
+	function setOpen(open) {
+		dropdown.dataset.open = open ? 'true' : 'false';
+		button.setAttribute('aria-expanded', open ? 'true' : 'false');
+		if (header) {
+			header.dataset.dropdownOpen = open ? 'true' : 'false';
+		}
+	}
+
+	setOpen(false);
+
+	button.addEventListener('click', function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		setOpen(!isOpen());
+	});
+
+	document.addEventListener('click', function(e) {
+		if (!dropdown.contains(e.target)) setOpen(false);
+	});
+
+	document.addEventListener('keydown', function(e) {
+		if (e.key === 'Escape') setOpen(false);
+	});
+})();
+</script>
+{{end}}

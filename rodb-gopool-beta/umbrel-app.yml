@@ -1,0 +1,74 @@
+manifestVersion: 1
+id: rodb-gopool
+name: goPool-BETA
+tagline: Solo Bitcoin Mining Pool written in goLang
+icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
+category: Bitcoin
+port: 23080
+version: v0.2.7-RodB0-BETA
+description: >-
+  goPool
+  A solo mining pool running open-source software with split-coinbase payouts and transparent operations. This is true solo mining: if your miner finds a block, you get the block reward. We don't split rewards among miners--the miner who finds it gets paid.
+  Reality check - Solo mining is probabilistic. Small miners can go months or years without finding a block. We don't know when--or if--you'll find one.
+  .
+  NOTE:  Docker Containers are now built with Multiplatform Support: X86-64 and ARM64
+releaseNotes: |-
+  Releases:
+    v0.2.7-RodB0 Released - 2026-03-07 (Updated to goPool v0.2.7: Updated WebUI: X86-64 and ARM64 - 2026-03-07T16:20PST)
+    v0.2.6-RodB2 Released - 2026-02-27 (Updated to goPool v0.2.6: Updated WebUI: X86-64 and ARM64 - 2026-02-27T11:40PST)
+    v0.2.5-RodB1 Released - 2026-02-23 (Updated to goPool v0.2.5: Stratum and config updates: X86-64 and ARM64 - 2026-02-23T09:30PST)
+    v0.2.4-RodB3 Released - 2026-02-20 (Updated to goPool v0.2.4: Add default-on ckpool emulate mode: X86-64 and ARM64 - 2026-02-20T08:40PST)
+    v0.2.3-RodB0 Released - 2026-02-16 (Updated to goPool v0.2.3: Updated WebUI Widget to ETL v4: X86-64 and ARM64 - 2026-02-16T11:30PST)
+    v0.2.2-RodB0 Released - 2026-02-15 (Updated to goPool v0.2.2: Updated Umbrel Web Widget to v3: X86-64 and ARM64 - 2026-02-15T19:40PST)
+    v0.2.0-RodB1 Released - 2026-02-11 (auto adjust share spam grace with vardiff window: X86-64 and ARM64 - 2026-02-11T12:20PST)
+    v0.1.9-RodB3 Released - 2026-02-10 (Updated goPool Widget ETL to support both: X86-64 and ARM64 - 2026-02-10T10:50PST)
+    v0.4.1-dev1  Released - 2026-01-23 (Initial Docker Version for UmbrelOS)
+developer: Distortions81 & RodB
+website: https://m45core.com
+dependencies:
+  - bitcoin
+repo: https://github.com
+support: https://github.com
+gallery:
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/1.png
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/2.png
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/3.png
+  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/4.png
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+submitter: RodB
+submission: https://github.come.git
+
+# Widget Configuration
+widgets:
+  - id: "stats"
+    type: "four-stats"
+    name: "goPool Stats"
+    # Communicates internally with your Flask container
+    endpoint: "rodb-gopool-widget:23000/widget/stats"
+    refresh: 10s
+    items:
+      - label: "Hashrate"
+        jsonPath: "items[0].text"
+      - label: "Workers"
+        jsonPath: "items[1].text"
+      - label: "Best Share"
+        jsonPath: "items[2].text"
+      - label: "Shares per min"
+        jsonPath: "items[3].text"
+    example:
+      type: "four-stats"
+      items:
+        - title: "Pool Hashrate"
+          text: "968"
+          subtext: "GH/s"
+        - title: "Workers"
+          text: "2"
+          subtext: ""
+        - title: "Best Share"
+          text: "1.1"
+          subtext: "G"
+        - title: "Share Rate"
+          text: "47.0"
+          subtext: "/min"
