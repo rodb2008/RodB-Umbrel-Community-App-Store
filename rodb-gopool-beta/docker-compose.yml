@@ -15,9 +15,11 @@ services:
     networks:
       - umbrel_main_network
   rodb-gopool:
-    image: rodb2008com/gopool:v0.2.7-RodB0-BETA
+    image: rodb2008com/gopool:v0.2.7-RodB0-BETA2
     container_name: rodb-gopool-container
     restart: unless-stopped
+    # Pass your optional parameters here:
+    command: ["-saved-workers-local-noauth"]
     ports:
       - '23080:80'
       - '23456:23456'

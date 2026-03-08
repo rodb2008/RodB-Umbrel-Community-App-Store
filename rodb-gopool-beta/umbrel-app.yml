@@ -5,7 +5,7 @@ tagline: Solo Bitcoin Mining Pool written in goLang
 icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
 category: Bitcoin
 port: 23080
-version: v0.2.7-RodB0-BETA
+version: v0.2.7-RodB0-BETA2
 description: >-
   goPool
   A solo mining pool running open-source software with split-coinbase payouts and transparent operations. This is true solo mining: if your miner finds a block, you get the block reward. We don't split rewards among miners--the miner who finds it gets paid.
