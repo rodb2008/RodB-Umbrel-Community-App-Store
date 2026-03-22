@@ -18,7 +18,7 @@ releaseNotes: |-
 developer: Distortions81 & RodB
 website: https://m45core.com
 dependencies:
-  - bitcoin
+  - 
 repo: https://github.com
 support: https://github.com
 gallery:
