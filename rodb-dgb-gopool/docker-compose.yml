@@ -20,9 +20,9 @@ services:
       - '6001:6001'
       - '24401:24401'
     volumes:
-      - /home/umbrel/umbrel/app-data/rodb-dgb-goPool/data:/app/data
-      - /home/umbrel/umbrel/app-data/rodb-dgb-goPool/scripts:/app/scripts
-      - /home/umbrel/umbrel/app-data/rodb-dgb-goPool/logo.png:/app/logo.png:ro
+      - /home/umbrel/umbrel/app-data/rodb-dgb-gopool/data:/app/data
+      - /home/umbrel/umbrel/app-data/rodb-dgb-gopool/scripts:/app/scripts
+      - /home/umbrel/umbrel/app-data/rodb-dgb-gopool/logo.png:/app/logo.png:ro
       - /home/umbrel/umbrel/app-data/bitcoin/data/bitcoin/:/home/umbrel/:ro
     environment:
       - APP_ENV=production
