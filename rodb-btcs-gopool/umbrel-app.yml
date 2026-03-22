@@ -1,6 +1,6 @@
 manifestVersion: 1
-id: rodb-gopool-btcs
-name: gopool-btcs
+id: rodb-btcs-gopool
+name: btcs-gopool
 tagline: Bitcoin Silver (BTCS) Mining Node Mining Pool UI written in goLang
 icon: https://raw.githubusercontent.com
 category: BETA

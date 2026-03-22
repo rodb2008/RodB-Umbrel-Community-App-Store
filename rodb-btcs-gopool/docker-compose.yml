@@ -1,28 +1,28 @@
 services:
-  rodb-gopool-btcs_app_proxy:
+  rodb-btcs-gopool_app_proxy:
     image: getumbrel/app-proxy:1.0.0
     restart: unless-stopped
     environment:
       - APP_ENV=production
-      - APP_HOST=rodb-gopool-container
+      - APP_HOST=rodb-btcs-gopool
       - APP_PORT=80
       - MANAGER_IP=${UMBREL_MANAGER_IP:-10.21.0.1}
       - UMBREL_AUTH_SECRET=${UMBREL_AUTH_SECRET}
     container_name: rodb-gopool-btcs_app_proxy_1
     networks:
       - umbrel_main_network
-  rodb-gopool-btcs:
+  rodb-btcs-gopool:
     image: rodb2008com/gopool-multi:v0.2.7-Multi-RodB0
-    container_name: rodb-gopool-btcs
+    container_name: rodb-btcs-gopool
     restart: unless-stopped
     ports:
       - '8001:80'
       - '6001:6001'
       - '24401:24401'
     volumes:
-      - /home/umbrel/umbrel/app-data/rodb-btcs-gopool/data:/app/data
-      - /home/umbrel/umbrel/app-data/rodb-btcs-gopool/scripts:/app/scripts
-      - /home/umbrel/umbrel/app-data/rodb-btcs-gopool/logo.png:/app/logo.png:ro
+      - $APP_DATA_DIR/data:/app/data
+      - $APP_DATA_DIR/scripts:/app/scripts
+      - $APP_DATA_DIR/logo.png:/app/logo.png:ro
       - /home/umbrel/umbrel/app-data/bitcoin/data/bitcoin/:/home/umbrel/:ro
     environment:
       - APP_ENV=production
