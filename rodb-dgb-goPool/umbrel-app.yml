@@ -17,8 +17,6 @@ releaseNotes: |-
     v0.2.7-Multi-RodB0 Released - 2026-02-27 (goPool v0.2.7: Updated WebUI for DGB Coin: X86-64 and ARM64 - 2026-03-21T20:00PDT)
 developer: Distortions81 & RodB
 website: https://m45core.com
-dependencies:
-  - 
 repo: https://github.com
 support: https://github.com
 gallery:
