@@ -1,0 +1,36 @@
+# Generated version bits config example (copy to ../version_bits.toml and edit as needed)
+#
+# This file is READ ONLY from goPool's perspective:
+# - goPool never rewrites version_bits.toml.
+# - Entries are applied in order; later entries for the same bit win.
+# - Overrides here are applied after policy.toml [version].bip110_enabled.
+#   If both touch bit 4, this file wins.
+#
+# Format:
+# [[bits]]
+#   bit = <0..31>
+#   enabled = true|false
+# Add one [[bits]] block per bit you want to override.
+# To set multiple bits, repeat [[bits]] for each bit.
+#
+# WARNING:
+# - Do not flip version bits unless you have a specific, validated reason.
+# - This file only modifies bits from the node's getblocktemplate version.
+# - In normal operation, leave node-provided bits unchanged.
+# - Improper changes can cause found (winning) blocks to be rejected.
+#
+# Example: force bit 5 on.
+#
+[[bits]]
+  bit = 5
+  enabled = true
+
+# Example: force bit 1 on.
+[[bits]]
+  bit = 1
+  enabled = true
+
+# Example: force bit 0 off.
+[[bits]]
+  bit = 0
+  enabled = false
