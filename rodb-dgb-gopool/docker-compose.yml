@@ -11,9 +11,9 @@ services:
     container_name: rodb-gopool_app_proxy_1
     networks:
       - umbrel_main_network
-  rodb-gopool:
+  rodb-gopool-multi:
     image: rodb2008com/gopool-multi:v0.2.7-Multi-RodB0
-    container_name: rodb-gopool-container
+    container_name: rodb-gopool-dgb
     restart: unless-stopped
     ports:
       - '8001:80'
