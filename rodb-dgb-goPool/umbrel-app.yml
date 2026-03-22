@@ -1,6 +1,6 @@
 manifestVersion: 1
-id: rodb-dgb-gopool
-name: dgb-goPool
+id: rodb
+name: rodb-dgb-goPool
 tagline: DigiByte (DGB) Mining Node Mining Pool UI written in goLang
 icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
 category: BETA
