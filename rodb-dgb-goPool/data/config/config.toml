@@ -1,0 +1,63 @@
+# goPool config.toml
+# This file is read on startup.
+# goPool may rewrite it (keeping a .bak) when it needs to persist settings.
+#
+# Key notes
+# - [server].pool_listen: Stratum TCP listener for miners (requires restart).
+# - [server].status_listen: HTTP listener for status UI (requires restart).
+# - [server].status_tls_listen: HTTPS listener; "" disables TLS (requires restart).
+# - [server].status_public_url: Canonical public URL for redirects/cookies; empty = auto-detect.
+# - [stratum].stratum_tls_listen: Optional Stratum-over-TLS listener (requires restart).
+# - [stratum].stratum_password_enabled: Require miners to send a password on authorize (requires restart).
+# - [stratum].stratum_password: Password string checked against mining.authorize params (requires restart).
+# - [stratum].stratum_password_public: Show the stratum password on the public connect panel (requires restart).
+#
+# Logging
+# - [logging].level: debug, info, warn, error (requires restart).
+#
+# Advanced settings can be split across services.toml, policy.toml, and tuning.toml.
+#
+
+[branding]
+  coin_symbol = "DGB"
+  fiat_currency = "usd"
+  pool_donation_address = "bc1qm4ltluu6pc6f26pu995t7tdeazurz4rq7dsnxp"
+  server_location = "DigiByte (DGB) Solo Mining Pool"
+  status_brand_domain = "rodb2008.com"
+  status_brand_name = "DGB"
+  status_connect_miner_title_extra = ""
+  status_connect_miner_title_extra_url = ""
+  status_tagline = "Southern California, USA"
+
+[logging]
+  level = "warn"
+
+[mining]
+  operator_donation_address = ""
+  operator_donation_name = ""
+  operator_donation_percent = 0.0
+  operator_donation_url = ""
+  pool_entropy = "RodB"
+  pool_fee_percent = 2.0
+  pooltag_prefix = "dgb_multi"
+
+[node]
+  payout_address = "DTmELgcQ3842nbAC2UE9z1jmVU547Vimzf"
+  rpc_cookie_path = ""
+  rpc_url = "http://192.168.6.6:9001"
+  zmq_hashblock_addr = "tcp://192.168.6.6:7001"
+  zmq_rawblock_addr = "tcp://192.168.6.6:7001"
+
+[server]
+  pool_listen = ":6001"
+  status_listen = ":80"
+  status_public_url = ""
+  status_tls_listen = ""
+
+[stratum]
+  safe_mode = false
+  stratum_password = ""
+  stratum_password_enabled = false
+  stratum_password_public = false
+  stratum_tls_listen = ":24001"
+
