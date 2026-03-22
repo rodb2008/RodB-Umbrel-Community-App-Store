@@ -1,8 +1,8 @@
 manifestVersion: 1
-id: rodb
-name: rodb-dgb-gopool
+id: rodb-dgb-gopool
+name: dgb-goPool
 tagline: DigiByte (DGB) Mining Node Mining Pool UI written in goLang
-icon: https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/logo.png
+icon: https://raw.githubusercontent.com
 category: BETA
 port: 8001
 version: v0.2.7-Multi-RodB0
@@ -17,27 +17,24 @@ releaseNotes: |-
     v0.2.7-Multi-RodB0 Released - 2026-02-27 (goPool v0.2.7: Updated WebUI for DGB Coin: X86-64 and ARM64 - 2026-03-21T20:00PDT)
 developer: Distortions81 & RodB
 website: https://m45core.com
-dependencies:
-  - 
 repo: https://github.com
-support: https://github.com
+support: https://github.com/issues
 gallery:
-  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/1.png
-  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/2.png
-  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/3.png
-  - https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-gopool/4.png
+  - https://raw.githubusercontent.com
+  - https://raw.githubusercontent.com
+  - https://raw.githubusercontent.com
+  - https://raw.githubusercontent.com
 path: ""
 defaultUsername: ""
 defaultPassword: ""
 submitter: RodB
-submission: https://github.come.git
+submission: https://github.com.git
 
 # Widget Configuration
 widgets:
   - id: "stats"
     type: "four-stats"
     name: "DGB Stats"
-    # Communicates internally with your Flask container
     endpoint: "rodb-gopool-widget:23000/widget/stats"
     refresh: 10s
     items:
@@ -64,4 +61,4 @@ widgets:
         - title: "Share Rate"
           text: "47.0"
           subtext: "/min"
-
+s
