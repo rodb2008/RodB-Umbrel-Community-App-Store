@@ -2,9 +2,6 @@ services:
   rodb-app_proxy:
     image: getumbrel/app-proxy:1.0.0
     restart: unless-stopped
-    volumes:
-      - >-
-        /home/umbrel/umbrel/app-data/rodb-gopool/umbrel-app.yml:/extra/umbrel-app.yml:ro
     environment:
       - APP_ENV=production
       - APP_HOST=rodb-gopool-container
@@ -23,9 +20,9 @@ services:
       - '6001:6001'
       - '24401:24401'
     volumes:
-      - /home/umbrel/umbrel/app-data/dgb-goPool/data:/app/data
-      - /home/umbrel/umbrel/app-data/dgb-goPool/scripts:/app/scripts
-      - /home/umbrel/umbrel/app-data/dgb-goPool/logo.png:/app/logo.png:ro
+      - /home/umbrel/umbrel/app-data/rodb-dgb-goPool/data:/app/data
+      - /home/umbrel/umbrel/app-data/rodb-dgb-goPool/scripts:/app/scripts
+      - /home/umbrel/umbrel/app-data/rodb-dgb-goPool/logo.png:/app/logo.png:ro
       - /home/umbrel/umbrel/app-data/bitcoin/data/bitcoin/:/home/umbrel/:ro
     environment:
       - APP_ENV=production
