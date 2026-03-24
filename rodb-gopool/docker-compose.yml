@@ -18,6 +18,11 @@ services:
     image: rodb2008com/gopool:latest
     container_name: rodb-gopool-container
     restart: unless-stopped
+    # ------------------------------------------------------------------
+    # OPTIONAL: Pass custom parameters to goPool here. 
+    # Example: command: ["-debug", "-network", "testnet"]
+    # ------------------------------------------------------------------
+    command: []
     ports:
       - '23080:80'
       - '23456:23456'

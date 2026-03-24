@@ -345,8 +345,14 @@
 						<div class="label">min_version_bits<div class="label-note">Minimum number of version-rolling bits required when version mask is active. Applies on live apply.</div></div>
 						<input name="min_version_bits" type="number" min="0" class="textfield" value="{{.Settings.MinVersionBits}}">
 					</div>
+						<div>
+							<div class="label"><label class="label" style="font-weight:500;margin:0;display:flex;align-items:center;gap:8px;"><input type="checkbox" name="share_allow_version_mask_mismatch" value="1" {{if .Settings.ShareAllowVersionMaskMismatch}}checked{{end}}><span>share_allow_version_mask_mismatch</span></label><div class="label-note">Allow miners to submit version bits outside the negotiated version-rolling mask (for example BIP-110 bit 4 signaling). Applies on live apply.</div></div>
+						</div>
+						<div>
+							<div class="label"><label class="label" style="font-weight:500;margin:0;display:flex;align-items:center;gap:8px;"><input type="checkbox" name="share_allow_degraded_version_bits" value="1" {{if .Settings.ShareAllowDegradedVersionBits}}checked{{end}}><span>share_allow_degraded_version_bits</span></label><div class="label-note">Allow version rolling even when miners advertise fewer bits than required. Applies on live apply.</div></div>
+						</div>
 					<div>
-						<div class="label"><label class="label" style="font-weight:500;margin:0;display:flex;align-items:center;gap:8px;"><input type="checkbox" name="share_allow_degraded_version_bits" value="1" {{if .Settings.ShareAllowDegradedVersionBits}}checked{{end}}><span>share_allow_degraded_version_bits</span></label><div class="label-note">Allow version rolling even when miners advertise fewer bits than required. Applies on live apply.</div></div>
+						<div class="label"><label class="label" style="font-weight:500;margin:0;display:flex;align-items:center;gap:8px;"><input type="checkbox" name="bip110_enabled" value="1" {{if .Settings.BIP110Enabled}}checked{{end}}><span>bip110_enabled</span></label><div class="label-note">Set BIP-110 version bit 4 on newly generated job templates. Applies on next template/job after live apply. version_bits.toml overrides are applied after this and can still force bit 4 on/off. Reference: https://github.com/bitcoin/bips/blob/master/bip-0110.mediawiki</div></div>
 					</div>
 				</div>
 
