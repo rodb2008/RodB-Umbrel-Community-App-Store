@@ -1003,6 +1003,32 @@
 		</div>
 		{{end}}
 
+	<h2>Found blocks</h2>
+	<div class="card">
+		<div style="overflow-x:auto;">
+			<table class="table" id="saved-workers-found-blocks-table">
+				<thead>
+					<tr>
+						<th>Height</th>
+						<th>Hash</th>
+						<th><span class="th-full">Worker</span><span class="th-short">.worker</span></th>
+						<th>Result</th>
+						<th><span class="th-full">Confirmations</span><span class="th-short">Conf</span></th>
+						<th>Pool (sats)</th>
+						<th>Worker (sats)</th>
+						<th><span class="th-full">Share difficulty</span><span class="th-short">Diff</span></th>
+						<th>When</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="9" class="text-sm">Loading found blocks…</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
 	{{template "footer" .}}
 	</main>
 	{{if .DiscordNotificationsEnabled}}
@@ -2885,7 +2911,7 @@
 				}
 				drawWorkerCombinedHistoryGraph(workerGraphsCombinedCanvas, hashrateRows, bestRows);
 				const shown = Math.max(hashrateRows.length, bestRows.length);
-				setWorkerGraphsStatus(shown > 0 ? `Showing ${shown} bucket${shown === 1 ? '' : 's'} (2m).` : 'No history recorded yet for this saved worker.', false);
+				setWorkerGraphsStatus(shown > 0 ? `Showing ${shown} bucket${shown === 1 ? '' : 's'} (1m).` : 'No history recorded yet for this saved worker.', false);
 			} catch (err) {
 				console.error('worker history fetch failed', err);
 				setWorkerGraphsStatus('Failed to load history.', true);
@@ -4078,11 +4104,72 @@
 					renderBlockHistory(data.recent_block_times);
 				}
 			}
+			function renderFoundBlocksTable(blocks) {
+				const tbody = document.querySelector('#saved-workers-found-blocks-table tbody');
+				if (!tbody) return;
+				if (!blocks || blocks.length === 0) {
+					tbody.innerHTML = '<tr><td colspan="9" class="text-sm">No blocks found yet.</td></tr>';
+					return;
+				}
+				const rows = blocks.map(block => {
+					const confirmations = (typeof block.confirmations === 'number' && block.confirmations > 0)
+						? block.confirmations
+						: '—';
+					const result = String(block.result || '').toLowerCase();
+					let resultLabel = 'Possible';
+					let resultStyle = 'color:#888;';
+					if (result === 'winning') {
+						resultLabel = 'Winning';
+						resultStyle = 'color:#4ade80;font-weight:600;';
+					} else if (result === 'stale') {
+						resultLabel = 'Stale';
+						resultStyle = 'color:#fca5a5;';
+					}
+					const worker = block.display_worker || block.worker || '—';
+					const str = String(worker);
+					const dotIdx = str.indexOf('.');
+					const suffix = dotIdx === -1 ? str : str.slice(dotIdx);
+					const ts = block.timestamp ? formatTimeAgoMillis(new Date(block.timestamp).getTime()) || '—' : '—';
+					const diff = block.share_diff;
+					let diffLabel = '—';
+					if (diff && diff > 0) {
+						if (diff < 1000000) diffLabel = diff.toFixed(0);
+						else if (diff >= 1e12) diffLabel = (diff / 1e12).toFixed(1) + 'P';
+						else if (diff >= 1e9) diffLabel = (diff / 1e9).toFixed(1) + 'G';
+						else diffLabel = (diff / 1e6).toFixed(1) + 'M';
+					}
+					return `<tr>
+						<td class="mono">${block.height !== undefined ? block.height : '—'}</td>
+						<td class="mono">${block.display_hash || block.hash || '—'}</td>
+						<td class="mono"><span class="worker-full">${worker}</span><span class="worker-suffix">${suffix}</span></td>
+						<td style="${resultStyle}">${resultLabel}</td>
+						<td class="mono">${confirmations}</td>
+						<td>${block.pool_fee_sats || 0}</td>
+						<td>${block.worker_payout_sats || 0}</td>
+						<td>${diffLabel}</td>
+						<td>${ts}</td>
+					</tr>`;
+				});
+				tbody.innerHTML = rows.join('');
+			}
+
+			function fetchFoundBlocks() {
+				fetch('/api/blocks?limit=10')
+					.then(response => {
+						if (!response.ok) throw new Error('Network response was not ok');
+						return response.json();
+					})
+					.then(data => { renderFoundBlocksTable(data); })
+					.catch(err => { console.error('Error fetching found blocks:', err); });
+			}
+
 			fetchOverview();
 			renderStoredHashrates();
 			fetchHashrate();
+			fetchFoundBlocks();
 		setInterval(fetchOverview, REFRESH_INTERVAL);
 		setInterval(fetchHashrate, REFRESH_INTERVAL);
+		setInterval(fetchFoundBlocks, 3000);
 		setInterval(() => {
 			renderTemplateTxFees();
 			if (typeof blockTimeLeftSec !== 'number') {
