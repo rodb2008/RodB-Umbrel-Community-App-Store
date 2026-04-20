@@ -1,0 +1,14 @@
+services:
+  btcs-dashboard:
+    build: .
+    container_name: btcs_web_dashboard
+    restart: unless-stopped
+    # 1. This tells Docker to share the Umbrel's exact network stack. 
+    # 'localhost:4000' will now hit MiningCore, and port 23111 is automatically exposed.
+    network_mode: "host"
+    volumes:
+      - /data/btcs-dash:/app
+      # 2. This maps the host's hardware sensors into the container as read-only
+      - /sys:/sys:ro
+    environment:
+      - PYTHONUNBUFFERED=1

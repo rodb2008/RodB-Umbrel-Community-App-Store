@@ -1,0 +1,23 @@
+manifestVersion: 1
+id: "rodb-btcs-dashboard"
+name: "Bitcoin Silver (BTCS) Dashboard"
+version: "0.01"
+icon: "https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-btcs-dashboard/icon.png"
+tagline: "Real-time dashboard for tracking BTCS Block Mining and node health."
+description: >
+  A professional-grade, mobile-responsive monitoring dashboard for BTCS mining nodes.
+  Features real-time network and pool hash rates, hardware temperature tracking, 
+  pool effort variations and automated Discord webhook alerts whenever a new block is found.
+  Designed to integrate seamlessly with Retro Mike's MiningCore Nodes.
+developer: "RodB"
+website: "https://github.com/rodb2008/RodB-Umbrel-Community-App-Store"
+submitter: "RodB"
+submissionDate: "2026-04-20"
+category: Bitcoin
+port: 23111
+# Optional: If you want to force MiningCore to be installed first, uncomment below
+# dependencies:
+#   - "retro-mike-miningcore" 
+gallery:
+  - "https://raw.githubusercontent.com/rodb2008/RodB-Umbrel-Community-App-Store/refs/heads/master/rodb-btcs-dashboard/1.png"
+path: ""
