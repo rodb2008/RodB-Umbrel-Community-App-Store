@@ -1,6 +1,6 @@
 services:
   btcs-dashboard:
-    build: .
+    image: rodb2008com/btcs-dash:v0.01
     container_name: btcs_web_dashboard
     restart: unless-stopped
     # 1. This tells Docker to share the Umbrel's exact network stack. 
