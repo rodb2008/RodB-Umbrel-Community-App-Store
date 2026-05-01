@@ -204,10 +204,6 @@
 					<div>
 						<div class="label"><label class="label" style="font-weight:500;margin:0;display:flex;align-items:center;gap:8px;"><input type="checkbox" name="enforce_suggested_difficulty_limits" value="1" {{if .Settings.EnforceSuggestedDifficultyLimits}}checked{{end}}><span>enforce_suggested_difficulty_limits</span></label><div class="label-note">Reject/ban suggested difficulties outside configured min/max bounds. Applies on live apply.</div></div>
 					</div>
-					<div>
-						<div class="label">difficulty_step_granularity<div class="label-note">Difficulty quantization granularity for mining.set_difficulty (1=power-of-two, 2=half, 3=third, 4=quarter). Applies on live apply.</div></div>
-						<input name="difficulty_step_granularity" type="number" min="1" class="textfield" value="{{.Settings.DifficultyStepGranularity}}">
-					</div>
 				</div>
 
 				<h3 style="margin:18px 0 8px 0;">Bans</h3>
@@ -302,11 +298,11 @@
 					</div>
 						<div>
 							<div class="label">extranonce2_size<div class="label-note">Per-share extranonce2 byte length for submitted shares. Applies to new connections; existing miners keep their assigned extranonce format.</div></div>
-							<input name="extranonce2_size" type="number" min="1" max="8" class="textfield" value="{{.Settings.Extranonce2Size}}">
+							<input name="extranonce2_size" type="number" min="2" max="16" class="textfield" value="{{.Settings.Extranonce2Size}}">
 					</div>
 					<div>
 						<div class="label">template_extranonce2_size<div class="label-note">Template extranonce2 byte length used in generated jobs. Applies to newly generated jobs after live apply.</div></div>
-						<input name="template_extranonce2_size" type="number" min="1" max="16" class="textfield" value="{{.Settings.TemplateExtraNonce2Size}}">
+						<input name="template_extranonce2_size" type="number" min="2" max="16" class="textfield" value="{{.Settings.TemplateExtraNonce2Size}}">
 					</div>
 					<div>
 						<div class="label">job_entropy<div class="label-note">Entropy bytes added to per-job tags in coinbase. Applies to newly generated jobs after live apply.</div></div>
@@ -342,14 +338,14 @@
 						<input name="share_ntime_max_forward_seconds" type="number" min="1" class="textfield" value="{{.Settings.ShareNTimeMaxForwardSeconds}}">
 					</div>
 					<div>
-						<div class="label">min_version_bits<div class="label-note">Minimum number of version-rolling bits required when version mask is active. Applies on live apply.</div></div>
+						<div class="label">min_version_bits<div class="label-note">Minimum version-rolling bit count advertised/negotiated with miners; not a per-share changed-bit requirement. Applies on live apply.</div></div>
 						<input name="min_version_bits" type="number" min="0" class="textfield" value="{{.Settings.MinVersionBits}}">
 					</div>
 						<div>
-							<div class="label"><label class="label" style="font-weight:500;margin:0;display:flex;align-items:center;gap:8px;"><input type="checkbox" name="share_allow_version_mask_mismatch" value="1" {{if .Settings.ShareAllowVersionMaskMismatch}}checked{{end}}><span>share_allow_version_mask_mismatch</span></label><div class="label-note">Allow miners to submit version bits outside the negotiated version-rolling mask (for example BIP-110 bit 4 signaling). Applies on live apply.</div></div>
+							<div class="label"><label class="label" style="font-weight:500;margin:0;display:flex;align-items:center;gap:8px;"><input type="checkbox" name="share_allow_out_of_mask_version_bits" value="1" {{if .Settings.ShareAllowOutOfMaskVersionBits}}checked{{end}}><span>share_allow_out_of_mask_version_bits</span></label><div class="label-note">Allow miners to submit version bits outside the negotiated version-rolling mask (for example BIP-110 bit 4 signaling). Applies on live apply.</div></div>
 						</div>
 						<div>
-							<div class="label"><label class="label" style="font-weight:500;margin:0;display:flex;align-items:center;gap:8px;"><input type="checkbox" name="share_allow_degraded_version_bits" value="1" {{if .Settings.ShareAllowDegradedVersionBits}}checked{{end}}><span>share_allow_degraded_version_bits</span></label><div class="label-note">Allow version rolling even when miners advertise fewer bits than required. Applies on live apply.</div></div>
+							<div class="label"><label class="label" style="font-weight:500;margin:0;display:flex;align-items:center;gap:8px;"><input type="checkbox" name="share_allow_degraded_version_bits" value="1" {{if .Settings.ShareAllowDegradedVersionBits}}checked{{end}}><span>share_allow_degraded_version_bits</span></label><div class="label-note">Compatibility flag retained for older configs; in-mask BIP310 submits are accepted even when fewer bits change on one share. Applies on live apply.</div></div>
 						</div>
 					<div>
 						<div class="label"><label class="label" style="font-weight:500;margin:0;display:flex;align-items:center;gap:8px;"><input type="checkbox" name="bip110_enabled" value="1" {{if .Settings.BIP110Enabled}}checked{{end}}><span>bip110_enabled</span></label><div class="label-note">Set BIP-110 version bit 4 on newly generated job templates. Applies on next template/job after live apply. version_bits.toml overrides are applied after this and can still force bit 4 on/off. Reference: https://github.com/bitcoin/bips/blob/master/bip-0110.mediawiki</div></div>
@@ -459,7 +455,7 @@
 		<div class="card">
 			<div class="label">Reload UI assets</div>
 			<p class="text-sm" style="margin:4px 0 10px 0;">
-				Reloads HTML templates and cached static files from disk without restarting the pool.
+				Re-parses embedded HTML templates and refreshes the embedded static cache without restarting the pool.
 			</p>
 			{{if .AdminReloadError}}
 			<p class="text-sm" style="color:#f88d8d;">{{.AdminReloadError}}</p>

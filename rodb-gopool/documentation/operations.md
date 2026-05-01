@@ -11,7 +11,50 @@ Operational Stratum notes:
 - A background heartbeat (`stratumHeartbeatInterval`) performs periodic non-longpoll template refreshes so "quiet mempool / no template churn" does not look like a dead node.
 - When updates are degraded but basic node RPC calls still work, the node-unavailable page will also show common sync/indexing indicators (IBD flag and blocks/headers) to help diagnose "node indexing" situations.
 
-## Building
+
+## Containerization (Docker/Compose)
+
+goPool provides a Dockerfile and docker-compose.yml for containerized deployments. This is the recommended way to run in production or for easy local testing.
+
+### Building and running with Docker
+
+Build the image:
+
+```bash
+docker build -t gopool:local .
+```
+
+Run the container:
+
+```bash
+docker run --rm -it \
+  -e BUILD_TIME="$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+  -e BUILD_VERSION="v0.0.0-dev" \
+  -p 3333:3333 -p 80:80 -p 443:443 \
+  -v "$PWD/data:/app/data" \
+  gopool:local -stdout
+```
+
+### Using Docker Compose
+
++Edit `.env` or `env.example` to set environment variables (ports, build args, runtime flags). Then:
+
+```bash
+docker compose up -d --build
+```
+
+This will build and start the container, mapping ports and mounting `./data` for persistent config/state.
+
+### Build arguments and environment variables
+
+- `BUILD_TIME` and `BUILD_VERSION` are passed at build time (set automatically by the Makefile and CI).
+- Runtime environment variables (see `env.example`) control ports, network mode, and extra flags.
+
+### Persistent data
+
+The `data` directory is mounted into the container at `/app/data` to persist configuration, logs, and state. Always back up this directory.
+
+---
 
 Requirements:
 * **Go 1.26.0+** — install from https://go.dev/dl/ for matching ABI guarantees.
@@ -68,10 +111,8 @@ Both values appear on the status page and JSON endpoints so you can verify the e
 | `-debug-log <path>` | Override debug log file path. |
 | `-net-debug-log <path>` | Override net-debug log file path. |
 | `-max-conns <n>` | Override max concurrent miner connections (`-1` keeps configured value). |
-| `-safe-mode <true|false>` | Force conservative compatibility/safety settings (can disable fast-path tuning and automatic bans). |
+| `-safe-mode <true|false>` | Force conservative compatibility/safety settings (can disable automatic bans). |
 | `-ckpool-emulate <true|false>` | Override CKPool-style Stratum subscribe response shape. |
-| `-stratum-fast-decode <true|false>` | Override fast-path Stratum decode/sniffing behavior. |
-| `-stratum-fast-encode <true|false>` | Override fast-path Stratum response encoding behavior. |
 | `-stratum-tcp-read-buffer <bytes>` | Override Stratum TCP read buffer bytes (`0` uses OS default). |
 | `-stratum-tcp-write-buffer <bytes>` | Override Stratum TCP write buffer bytes (`0` uses OS default). |
 | `-secrets <path>` | Point to an alternate `secrets.toml`; the file is not rewritten. |
@@ -99,8 +140,8 @@ The required `data/config/config.toml` is the primary interface for pool behavio
 - `[branding]`: Styling and branding options shown in the status UI (tagline, pool donation link, location string).
 - `[stratum]`: `stratum_tls_listen` for TLS-enabled Stratum (leave blank to disable secure Stratum), plus `stratum_password_enabled`/`stratum_password` to require a shared password on `mining.authorize`, and `stratum_password_public` to show the password on the public connect panel.
 - `policy.toml [stratum]`: `ckpool_emulate` controls CKPool-style subscribe response compatibility.
-- `tuning.toml [stratum]`: `fast_decode_enabled`, `fast_encode_enabled`, `tcp_read_buffer_bytes`, and `tcp_write_buffer_bytes` control Stratum fast-path and socket buffer tuning.
-- Optional runtime overrides (temporary): `-ckpool-emulate`, `-stratum-fast-decode`, `-stratum-fast-encode`, `-stratum-tcp-read-buffer`, and `-stratum-tcp-write-buffer`.
+- `tuning.toml [stratum]`: `tcp_read_buffer_bytes` and `tcp_write_buffer_bytes` control Stratum socket buffer tuning.
+- Optional runtime overrides (temporary): `-ckpool-emulate`, `-stratum-tcp-read-buffer`, and `-stratum-tcp-write-buffer`.
 - `[node]`: `rpc_url`, `rpc_cookie_path`, and ZMQ addresses (`zmq_hashblock_addr`/`zmq_rawblock_addr`).
 - `[mining]`: Pool fee, donation settings, and `pooltag_prefix`.
 - `[logging]`: `debug` enables verbose runtime logging, and `net_debug` enables raw network tracing (`net-debug.log`) when debug logging is active.
@@ -117,11 +158,11 @@ Optional split override files can layer advanced settings without touching the m
 - `[timeouts]`: `connection_timeout_seconds`.
 - `[mining]` in `policy.toml`: share-validation policy toggles (`share_*` settings) plus `submit_process_inline`.
 - `[difficulty]`: `default_difficulty` fallback when no suggestion arrives, `max_difficulty`/`min_difficulty` clamps (0 disables a clamp), whether to lock miner-suggested difficulty, and whether to enforce min/max on suggested difficulty (ban/disconnect when outside limits). The first `mining.suggest_*` is honored once per connection, triggers a clean notify, and subsequent suggests are ignored.
-- `[mining]`: `extranonce2_size`, `template_extra_nonce2_size`, `job_entropy`, `coinbase_scriptsig_max_bytes`, `disable_pool_job_entropy` to remove the `<pool_entropy>-<job_entropy>` suffix, and `difficulty_step_granularity` to control difficulty quantization precision (`1` power-of-two, `2` half-step, `3` third-step, `4` quarter-step default).
+- `[mining]`: `extranonce2_size`, `template_extra_nonce2_size`, `job_entropy`, `coinbase_scriptsig_max_bytes`, and `disable_pool_job_entropy` to remove the `<pool_entropy>-<job_entropy>` suffix. Assigned Stratum difficulty is rounded to whole numbers at difficulty `>= 1` for broad miner compatibility; fractional difficulty is only used below `1`.
 - `[hashrate]`: `hashrate_ema_tau_seconds`, `share_ntime_max_forward_seconds`.
 - `[peer_cleaning]`: Enable/disable peer cleanup and tune thresholds.
 - `[bans]`: Ban thresholds/durations, `banned_miner_types` (disconnect miners by client ID on subscribe), and `clean_expired_on_startup` (defaults to `true`). Prefer `data/config/miner_blacklist.json` for client ID blacklist management; it overrides `banned_miner_types` when present. Set `clean_expired_on_startup = false` if you want to keep expired bans for inspection.
-- `[version]` in `policy.toml`: `min_version_bits`, `share_allow_version_mask_mismatch` (allows submits outside negotiated mask, useful for BIP-110 bit 4 signaling), `share_allow_degraded_version_bits`, and `bip110_enabled` (sets bit 4 on newly generated templates).
+- `[version]` in `policy.toml`: `min_version_bits` (advertised/negotiated bit count, not a per-share changed-bit requirement), `share_allow_out_of_mask_version_bits` (allows submits outside negotiated mask, useful for BIP-110 bit 4 signaling), `share_allow_degraded_version_bits` (retained compatibility flag), and `bip110_enabled` (sets bit 4 on newly generated templates).
 - `version_bits.toml`: explicit `[[bits]]` overrides for block header version bits (`bit=<0..31>`, `enabled=true|false`). This file is read-only from goPool's perspective and is never rewritten. Overrides are applied after `bip110_enabled`, so `version_bits.toml` has final authority per bit.
 
 Keep these files absent to use built-in defaults. The first run creates examples under `data/config/examples/`.
@@ -292,7 +333,7 @@ Each override value logs when set, so goPool operators can audit what changed vi
 
 ## Runtime operations
 
-- **SIGUSR1** reloads the HTML templates under `data/templates/`. Errors (parse failures, missing files) are logged but the previous template set remains active so the site keeps serving—check `pool.log` if pages look odd after a reload.
+- **SIGUSR1** re-parses the embedded HTML templates and refreshes the embedded static cache. Errors are logged but the previous template set remains active so the site keeps serving—check `pool.log` if pages look odd after a reload.
 - **SIGUSR2** reloads `config.toml`, `secrets.toml`, `services.toml`, `policy.toml`, `tuning.toml`, and `version_bits.toml`, reapplies overrides, and updates the status server with the new config.
 - **Shutdown** occurs on `SIGINT`/`SIGTERM`. goPool stops the status servers, Stratum listener, and pending replayers gracefully.
 - **TLS cert reloading** uses `certReloader` to monitor `data/tls_cert.pem`/`tls_key.pem` hourly. Certificate renewals (e.g., via certbot) are picked up without restarts.

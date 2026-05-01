@@ -57,24 +57,29 @@ goPool applies version changes in this order:
 
 ## Miner submit compatibility
 
-`policy.toml [version].share_allow_version_mask_mismatch` controls whether
-goPool rejects miner-submitted version changes outside the negotiated
-version-rolling mask:
+`policy.toml [version].share_allow_out_of_mask_version_bits` controls whether
+goPool rejects miner-submitted version changes that were not negotiated or are
+outside the negotiated version-rolling mask:
 
-- `true`: allow out-of-mask submits for compatibility (for example
+- `true` (default): allow unnegotiated or out-of-mask submits for compatibility (for example
   miners signaling BIP-110 bit 4).
-- `false` (default): strict mask enforcement (`invalid version mask` policy reject on
+- `false`: strict mask enforcement (`invalid version` or `invalid version mask` policy reject on
   non-block shares).
 
 ### How goPool interprets submitted `version`
 
-goPool uses **delta semantics** for submit `version` values (`rolled_version ^ base_version`).
+goPool prefers BIP310 replacement-bit semantics for submit `version` values.
 
-- Values fully inside the negotiated mask are treated as deltas.
-- When `share_allow_version_mask_mismatch = true`, out-of-mask values are also
-  treated as deltas (delta-only compatibility behavior).
+- Values fully inside the negotiated mask are treated as the miner-selected
+  replacement bits for that mask.
+- Full rolled versions are accepted when they differ from the job version only
+  inside the negotiated mask.
+- Ambiguous in-mask values also keep a legacy XOR-delta fallback while checking
+  the resulting share, so older firmware still has a chance to submit valid work.
+- When `share_allow_out_of_mask_version_bits = true`, out-of-mask values are
+  treated as legacy XOR deltas for compatibility.
 
-Practical implication when `share_allow_version_mask_mismatch = true`:
+Practical implication when `share_allow_out_of_mask_version_bits = true`:
 
 - Out-of-mask signaling (for example BIP-110 bit 4) should be sent as a delta
   (example: `0x00000010`).
